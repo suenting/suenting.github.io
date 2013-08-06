@@ -1,0 +1,22 @@
+:focus
+{
+	outline:none;
+}
+.ui-menu 
+{
+	width: 150px; 
+}
+
+.ui-menu-item
+{
+	list-style-type:none;
+}
+
+.floatleft
+{
+	float:left;
+}
+.floatright
+{
+	float:right;
+}
