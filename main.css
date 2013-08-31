@@ -20,3 +20,21 @@
 {
 	float:right;
 }
+
+.subframe
+{
+	width:1000px;
+	height:600px;
+}
+
+.matrix
+{
+text-align: center;
+vertical-align: middle;
+height: 100%;
+font-size: 35px;
+}
+.valign_m
+{
+	vertical-align: middle;
+}

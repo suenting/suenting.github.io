@@ -54,11 +54,12 @@ Theme Styles
 body {
   box-sizing: border-box;
   color:#373737;
-  background: #212121;
+  background: #fff;
   font-size: 16px;
   font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  height:99%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -241,23 +242,29 @@ th {
   padding: 10px;
   background: #373737;
   color: #fff;
+  text-align:center;
  }
 
 td {
   padding: 10px;
-  border: 1px solid #373737;
+  border: 0px;
  }
 
 form {
   background: #f2f2f2;
   padding: 20px;
 }
-
-img {
-  width: 100%;
-  max-width: 100%;
+.img_80
+{
+	width: 80%;
+	height: 30%;
 }
-
+/**
+img {
+ width: 100%;
+ max-width: 100%;
+}
+**/
 /*******************************************************************************
 Full-Width Styles
 *******************************************************************************/
@@ -298,7 +305,7 @@ Full-Width Styles
 }
 
 #header_wrap .inner {
-  padding: 30px 10px 10px 10px;
+  padding: 50px 10px 30px 10px;
 }
 
 #project_title {
@@ -357,9 +364,7 @@ Full-Width Styles
 }
 
 #main_content_wrap {
-  background: #f2f2f2;
-  border-top: 1px solid #111;
-  border-bottom: 1px solid #111;
+  background: #fff;
 }
 
 #main_content {
