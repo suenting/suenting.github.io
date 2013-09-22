@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset='utf-8' />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<meta name="description" content="Suenting.github.io : user" />
+	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+	<title>suenting.github.io</title>
+	<script type="text/javascript" src="./lib/webgl-utils.js"></script>
+	<script type="text/javascript" src="./lib/gl-matrix.js"></script>
+	
+	<!--Normals-->
+	<script id="shader-fs-normal" type="x-shader/x-fragment">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	varying vec3 vNormal;
+	
+	void main(void) {
+		vec3 normal = normalize(vNormal);
+		gl_FragColor = vec4(normal.x, normal.y, normal.z, 1.0 );
+	}
+	</script>
+	<script id="shader-vs-normal" type="x-shader/x-vertex">
+	attribute vec3 aVertexPosition;
+	attribute vec3 aVertexNormal;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	varying vec3 vNormal;
+	void main(void) {
+		vNormal = uNMatrix * aVertexNormal;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+	}
+	</script>
+	
+	<!--Z-buffer-->
+	<script id="shader-fs-depth" type="x-shader/x-fragment">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	varying vec3 vNormal;
+	varying float vDistance;
+	
+	void main(void) {
+		float color = ((120.0-vDistance)/120.0);
+		gl_FragColor = vec4(color, color, color, 1.0 );
+	}
+	</script>
+	<script id="shader-vs-depth" type="x-shader/x-vertex">
+	attribute vec3 aVertexPosition;
+	attribute vec3 aVertexNormal;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	varying vec3 vNormal;
+	varying float vDistance;
+	varying vec4 vEyepos;
+	void main(void) {
+		vNormal = aVertexNormal;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vEyepos = uMVMatrix * vec4(aVertexPosition, 1.0);
+		vDistance = distance(vEyepos, gl_Position);
+	}
+	</script>
+	
+	<!--plain-->
+	<script id="shader-fs" type="x-shader/x-fragment">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	varying vec4 vPosition;
+	varying vec4 vEyepos;
+	varying vec3 vNormal;
+	
+	void main(void) {
+		vec4 direction4 = vPosition-vEyepos;
+		vec3 direction = vec3(direction4.x,direction4.y,direction4.z);
+		float fLightWeight = min(max(dot( normalize(vNormal),    normalize(direction) ), 0.1),1.0);
+		vec4 white = vec4(1.0,1.0,1.0,1.0);
+		float color = 1.0*fLightWeight;
+		gl_FragColor = vec4(color, color, color, 1.0 );
+	}
+	</script>
+
+	<script id="shader-vs" type="x-shader/x-vertex">
+	attribute vec3 aVertexPosition;
+	attribute vec2 aTextureCoord;
+	attribute vec3 aVertexNormal;
+	 
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+
+	varying vec4 vPosition;
+	varying vec4 vEyepos;
+	varying float vDistance;
+	varying vec3 vNormal;
+
+	void main(void) {
+		vec3 transformedNormal = uNMatrix * aVertexNormal;
+		vNormal = transformedNormal;
+		vEyepos = uMVMatrix * vec4(aVertexPosition, 1.0);
+		vPosition = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		gl_Position = vPosition;
+	}
+	</script>
+	
+<script type="text/javascript"> 
+    var gl;
+ 
+    function initGL(canvas) {
+        try {
+            gl = canvas.getContext("experimental-webgl");
+            gl.viewportWidth = canvas.width;
+            gl.viewportHeight = canvas.height;
+        } catch (e) {
+        }
+        if (!gl) {
+            alert("Could not initialise WebGL, sorry :-(");
+        }
+    }
+ 
+ 
+    function getShader(gl, id) {
+        var shaderScript = document.getElementById(id);
+        if (!shaderScript) {
+            return null;
+        }
+ 
+        var str = "";
+        var k = shaderScript.firstChild;
+        while (k) {
+            if (k.nodeType == 3) {
+                str += k.textContent;
+            }
+            k = k.nextSibling;
+        }
+ 
+        var shader;
+        if (shaderScript.type == "x-shader/x-fragment") {
+            shader = gl.createShader(gl.FRAGMENT_SHADER);
+        } else if (shaderScript.type == "x-shader/x-vertex") {
+            shader = gl.createShader(gl.VERTEX_SHADER);
+        } else {
+            return null;
+        }
+ 
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+ 
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            alert(gl.getShaderInfoLog(shader));
+            return null;
+        }
+ 
+        return shader;
+    }
+ 
+ 
+    var shaderProgramNormal;
+    var shaderProgramDepth
+    var shaderPrograms = new Array();
+    function initShaders(shaderIndex, fragmentshader, vertexshader) {
+        var fragmentShader = getShader(gl, fragmentshader);
+        var vertexShader = getShader(gl, vertexshader);
+        shaderPrograms[shaderIndex] = gl.createProgram();
+        gl.attachShader(shaderPrograms[shaderIndex], vertexShader);
+        gl.attachShader(shaderPrograms[shaderIndex], fragmentShader);
+        gl.linkProgram(shaderPrograms[shaderIndex]);
+        if (!gl.getProgramParameter(shaderPrograms[shaderIndex], gl.LINK_STATUS)) {
+            alert("Could not initialise shaders");
+        }
+	
+        gl.useProgram(shaderPrograms[shaderIndex]);
+        shaderPrograms[shaderIndex].vertexPositionAttribute = gl.getAttribLocation(shaderPrograms[shaderIndex], "aVertexPosition");
+        
+	gl.enableVertexAttribArray(shaderPrograms[shaderIndex].vertexPositionAttribute);
+	shaderPrograms[shaderIndex].vertexNormalAttribute = gl.getAttribLocation(shaderPrograms[shaderIndex], "aVertexNormal");
+	
+	gl.enableVertexAttribArray(shaderPrograms[shaderIndex].vertexNormalAttribute);
+        shaderPrograms[shaderIndex].pMatrixUniform = gl.getUniformLocation(shaderPrograms[shaderIndex], "uPMatrix");
+        shaderPrograms[shaderIndex].mvMatrixUniform = gl.getUniformLocation(shaderPrograms[shaderIndex], "uMVMatrix");
+	shaderPrograms[shaderIndex].nMatrixUniform = gl.getUniformLocation(shaderPrograms[shaderIndex], "uNMatrix");
+        shaderPrograms[shaderIndex].samplerUniform = gl.getUniformLocation(shaderPrograms[shaderIndex], "uSampler");	
+    }
+ 
+    function handleLoadedTexture(texture) {
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.bindTexture(gl.TEXTURE_2D, null);
+    }
+ 
+    var mvMatrix = mat4.create();
+    var mvMatrixStack = [];
+    var pMatrix = mat4.create();
+ 
+    function mvPushMatrix() {
+        var copy = mat4.create();
+        mat4.set(mvMatrix, copy);
+        mvMatrixStack.push(copy);
+    }
+ 
+    function mvPopMatrix() {
+        if (mvMatrixStack.length == 0) {
+            throw "Invalid popMatrix!";
+        }
+        mvMatrix = mvMatrixStack.pop();
+    }
+ 
+ 
+    function setMatrixUniforms(index){
+	gl.uniformMatrix4fv(shaderPrograms[index].pMatrixUniform, false, pMatrix);
+        gl.uniformMatrix4fv(shaderPrograms[index].mvMatrixUniform, false, mvMatrix);
+	var normalMatrix = mat3.create();
+	mat4.toInverseMat3(mvMatrix, normalMatrix);
+	mat3.transpose(normalMatrix);
+	gl.uniformMatrix3fv(shaderPrograms[index].nMatrixUniform, false, normalMatrix);
+    }
+ 
+	function degToRad(degrees) {
+		return degrees * Math.PI / 180;
+	}
+ 
+	var modelList = new Array();
+    
+	function handleLoadedJson(data) 
+	{
+		var modelObject = new Object();
+		// vertex normal
+		modelObject.vertexNormalBuffer = new Object();
+		modelObject.vertexNormalBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, modelObject.vertexNormalBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data.vertexNormals), gl.STATIC_DRAW);
+		modelObject.vertexNormalBuffer.itemSize = new Object();
+		modelObject.vertexNormalBuffer.numItems = new Object();
+		modelObject.vertexNormalBuffer.itemSize = 3;
+		modelObject.vertexNormalBuffer.numItems = data.vertexNormals.length / 3;
+	 
+		// vertex texture
+		//var modelObject.vertexTextureCoordBuffer;
+		modelObject.vertexTextureCoordBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, modelObject.vertexTextureCoordBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data.vertexTextureCoords), gl.STATIC_DRAW);
+		modelObject.vertexTextureCoordBuffer.itemSize = new Object();
+		modelObject.vertexTextureCoordBuffer.numItems = new Object();
+		modelObject.vertexTextureCoordBuffer.itemSize = 2;
+		modelObject.vertexTextureCoordBuffer.numItems = data.vertexTextureCoords.length / 2;
+	 
+		// vertex
+		//var modelObject.vertexPositionBuffer;
+		modelObject.vertexPositionBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, modelObject.vertexPositionBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data.vertexPositions), gl.STATIC_DRAW);
+		modelObject.vertexPositionBuffer.itemSize = new Object();
+		modelObject.vertexPositionBuffer.numItems = new Object();
+		modelObject.vertexPositionBuffer.itemSize = 3;
+		modelObject.vertexPositionBuffer.numItems = data.vertexPositions.length / 3;
+	 
+		// face
+		//var modelObject.vertexIndexBuffer;
+		modelObject.vertexIndexBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, modelObject.vertexIndexBuffer);
+		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(data.indices), gl.STATIC_DRAW);
+		modelObject.vertexIndexBuffer.itemSize = new Object();
+		modelObject.vertexIndexBuffer.numItems = new Object();
+		modelObject.vertexIndexBuffer.itemSize = 1;
+		modelObject.vertexIndexBuffer.numItems = data.indices.length;
+		
+		modelObject.xRot =0;
+		modelObject.yRot =0;
+		modelObject.zRot =0;
+		
+		modelList.push(modelObject);
+	}
+	
+	function LoadModel(strModelName)
+	{
+		var request = new XMLHttpRequest();
+		request.open("GET", strModelName);
+		request.onreadystatechange = function () {
+		    if (request.readyState == 4) {
+			handleLoadedJson(JSON.parse(request.responseText));
+		    }
+		}
+		request.send();
+	}
+ 
+	function initBuffers() 
+	{
+        vertexPositionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+	LoadModel("./mesh/dragon.json");
+	}
+ 
+	shaderIndex = 0;
+	function setShaderIndex(newIndex){
+		shaderIndex = newIndex;
+	}
+	function drawModel(model)
+	{
+		mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 1000.0, pMatrix);
+		mat4.identity(mvMatrix);
+		mat4.translate(mvMatrix, [0.0, 0.0, -30.0]);
+		mat4.rotate(mvMatrix, degToRad(model.xRot), [1, 0, 0]);
+		mat4.rotate(mvMatrix, degToRad(model.yRot), [0, 1, 0]);
+		mat4.rotate(mvMatrix, degToRad(model.zRot), [0, 0, 1]);
+		mat4.translate(mvMatrix, [0.0, -5.0, 0.0]);
+		
+		gl.useProgram(shaderPrograms[shaderIndex]);
+		gl.bindBuffer(gl.ARRAY_BUFFER, model.vertexPositionBuffer);
+		gl.vertexAttribPointer(shaderPrograms[shaderIndex].vertexPositionAttribute, model.vertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+		gl.bindBuffer(gl.ARRAY_BUFFER, model.vertexNormalBuffer);
+		gl.vertexAttribPointer(shaderPrograms[shaderIndex].vertexNormalAttribute, model.vertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
+		gl.uniform1i(shaderPrograms[shaderIndex].samplerUniform, 0);
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.vertexIndexBuffer);
+		setMatrixUniforms(shaderIndex);
+		gl.drawElements(gl.TRIANGLES, model.vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+	}
+	
+    function drawScene() {
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+ 
+	for(var i=0; i<modelList.length; i++) 
+	{
+		drawModel(modelList[0]);
+	}
+    }
+ 
+ 
+    var lastTime = 0;
+ 
+    var gCanvas = null;
+    var bIsDragging = false;
+    var curX = 0;
+    var curY = 0;
+    function animate() {
+        var timeNow = new Date().getTime();
+        if (lastTime != 0) {
+            var elapsed = timeNow - lastTime;
+            yRot += (90 * elapsed) / 5000.0;
+        }
+        lastTime = timeNow;
+    }
+ 
+ 
+    function tick() {
+        requestAnimFrame(tick);
+        drawScene();
+    }
+ 
+ 
+    function webGLStart() {
+        var canvas = document.getElementById("webglCanvas");
+	gCanvas = canvas;
+	
+	gCanvas.onmousedown = function(ev){
+		bIsDragging = true;
+		curX = ev.clientX;
+		curY = ev.clientY;
+	}
+	
+	gCanvas.onmousemove = function(ev){
+		if(bIsDragging){
+		var newX = ev.clientX;
+		var newY = ev.clientY;
+		
+		var dX = newX - curX;
+		var dY = newY - curY;
+		
+		modelList[0].yRot = modelList[0].yRot + dX;
+		modelList[0].xRot = modelList[0].xRot + dY;
+		
+		curX = ev.clientX;
+		curY = ev.clientY;
+		}
+	}
+	
+	gCanvas.onmouseup = function(ev){
+		bIsDragging = false;
+	}
+	
+        initGL(canvas);
+	
+        initShaders(0, "shader-fs-normal","shader-vs-normal");
+	initShaders(1, "shader-fs-depth","shader-vs-depth");
+	initShaders(2, "shader-fs","shader-vs");
+	
+        initBuffers();
+ 
+        gl.clearColor(1.0, 1.0, 1.0, 1.0);
+        gl.enable(gl.DEPTH_TEST);
+ 
+        tick();
+    }
+</script>
+
+  </head>
+
+  <body>
+
+	<!-- HEADER -->
+	<div id="header_wrap" class="outer">
+	<header class="inner">
+          <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
+
+          <h1 id="project_title">suenting.github.io</h1>
+          <h2 id="project_tagline"></h2>
+
+	</header>
+	</div>
+
+	<!-- MAIN CONTENT -->
+	<div id="main_content_wrap" class="outer">
+	<section id="main_content" class="inner">
+	
+	<CENTER>
+	<CANVAS style="BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BORDER-TOP: medium none; BORDER-RIGHT: medium none" id=webglCanvas height="480" width="640"></CANVAS>
+	<BR />
+	<button type="button" onclick="setShaderIndex(0);">Normals</button>
+	<button type="button" onclick="setShaderIndex(1);">Depth</button>
+	<button type="button" onclick="setShaderIndex(2);">Basic</button>
+	
+	</CENTER>
+	</section>
+	</div>
+
+	<!-- FOOTER  -->
+	<div id="footer_wrap" class="outer">
+	<footer class="inner">
+		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+		<p>Based on <a href="http://learningwebgl.com/">Learning WebGL</a></p>
+		<script>webGLStart()</script>
+	</footer>
+	</div>
+	</body>
+</html>
