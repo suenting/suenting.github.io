@@ -14,6 +14,7 @@
 	<script src="./jquery/ui/jquery.ui.position.js"></script>
 	<script src="./jquery/ui/jquery.ui.menu.js"></script>
 	<script src="./jquery/ui/jquery.ui.tabs.js"></script>
+	<script src="./jquery/ui/jquery.ui.button.js"></script>
 	<link rel="stylesheet" href="./main.css">
 	<script>
 	$(function() {
@@ -22,8 +23,11 @@
 	$(function() {
 		$( "#menu" ).menu();
 	});
+	
+	$(function() {
+	    $( ".button" ).button();
+	  });
 	</script>
-
   </head>
 
   <body>
@@ -31,7 +35,13 @@
 
 	<div id="main_content_wrap" class="outer">
 	<section id="main_content" class="inner">
-			A simple homepage for personal projects/toys/test code
+		A simple page running Ace code editor with TogetherJS.
+		<BR/>
+		<a class="button" href="./ace_together/ace_together.html" target="_blank">Launch</a>
+		<BR/>
+		<BR/>
+		Implemented with <a href="http://ace.c9.io/">Ace</a><BR/>
+		Implemented with <a href="https://togetherjs.com/">TogetherJS</a>
 	</section>
 	</div>
 </body>

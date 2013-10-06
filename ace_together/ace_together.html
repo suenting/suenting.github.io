@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset='utf-8' />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<meta name="description" content="Suenting.github.io : user" />
+	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+	<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://togetherjs.com/togetherjs-min.js"></script>
+	<title></title>
+<script>
+
+function ThemeChanged(name){
+editor.setTheme("ace/theme/"+name);
+}
+function ModeChanged(name){
+editor.getSession().setMode("ace/mode/"+name);
+}
+</script>
+<style>
+
+</style>
+
+</head>
+
+  <body>
+
+	<!-- HEADER -->
+	<div id="header_wrap" class="outer">
+	<header class="inner">
+          <h1 id="project_title"></h1>
+          <h2 id="project_tagline"></h2>
+	</header>
+	</div>
+
+	<!-- MAIN CONTENT -->
+	<div id="main_content_wrap" class="outer">
+	<section id="main_content" class="inner">
+Theme: 
+<select onchange="ThemeChanged(this.value)">
+<option value="twilight">twilight</option>
+<option value="ambiance">ambiance</option>
+<option value="chaos">chaos</option>
+<option value="chrome">chrome</option>
+<option value="clouds">clouds</option>
+<option value="clouds_midnight">clouds_midnight</option>
+<option value="cobalt">cobalt</option>
+<option value="crimson_editor">crimson_editor</option>
+<option value="dawn">dawn</option>
+<option value="dreamweaver">dreamweaver</option>
+<option value="eclipse">eclipse</option>
+<option value="github">github</option>
+<option value="terminal">terminal</option>
+<option value="textmate">textmate</option>
+<option value="vibrant_ink">vibrant_ink</option>
+<option value="xcode">xcode</option>
+</select>
+Mode:
+<select onchange="ModeChanged(this.value)">
+<option value="c_cpp">C / C++</option>
+<option value="csharp">C#</option>
+<option value="java">java</option>
+<option value="python">python</option>
+<option value="lua">lua</option>
+<option value="javascript">javascript</option>
+<option value="sql">sql</option>
+<option value="mysql">mysql</option>
+<option value="html">html</option>
+<option value="css">css</option>
+</select>
+
+<pre id="editor" style="height:720px; width:1200px;"></pre>
+
+	</section>
+	</div>
+
+	<!-- FOOTER  -->
+	<div id="footer_wrap" class="outer">
+	<footer class="inner">
+		<p>
+		Published with <a href="http://pages.github.com">GitHub Pages</a><BR/>
+		Implemented with <a href="http://ace.c9.io/">Ace</a>
+		and <a href="https://togetherjs.com/">TogetherJS</a>
+		</p>
+	</footer>
+	</div>
+
+	<script>
+	editor = ace.edit("editor");
+	editor.setTheme("ace/theme/twilight");
+	editor.getSession().setMode("ace/mode/c_cpp");
+
+	TogetherJS(this);
+	</script>
+	</body>
+</html>
