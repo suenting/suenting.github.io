@@ -4,7 +4,7 @@
 }
 .ui-menu 
 {
-	width: 150px; 
+	width: 250px; 
 }
 
 .ui-menu-item
@@ -37,4 +37,44 @@ font-size: 35px;
 .valign_m
 {
 	vertical-align: middle;
+}
+pre
+{
+	padding:0px;
+}
+code
+{
+	width:95%;
+}
+.notes
+{
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 10px;
+	border-style:solid;
+border-color:#aaa;
+border-width:1px;
+}
+.notesHeader
+{
+padding: 10px;
+border-radius: 5px;
+background: -webkit-linear-gradient(#ddd, #bbb); /* For Safari */
+background: -o-linear-gradient(#ddd, #bbb); /* For Opera 11.1 to 12.0 */
+background: -moz-linear-gradient(#ddd, #bbb); /* For Firefox 3.6 to 15 */
+background: linear-gradient(#ddd, #bbb); /* Standard syntax */
+border-style:solid;
+border-color:#aaa;
+border-width:1px;
+}
+sub {
+vertical-align: sub;
+font-size: smaller;
+}
+.floatmenu
+{
+  position: fixed;
+  right: 25px;
+  top: 30%;
+  margin-top: -2.5em;
 }

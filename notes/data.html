@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset='utf-8' />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<meta name="description" content="Suenting.github.io : user" />
+
+	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+	<script src="../prettify/run_prettify.js"></script>
+	<link rel="stylesheet" href="../main.css">
+	<link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
+	<script src="../jquery/jquery-1.8.3.js"></script>
+	<script src="../jquery/ui/jquery.ui.core.js"></script>
+	<script src="../jquery/ui/jquery.ui.widget.js"></script>
+	<script src="../jquery/ui/jquery.ui.position.js"></script>
+	<script src="../jquery/ui/jquery.ui.menu.js"></script>
+	<script src="../jquery/ui/jquery.ui.tabs.js"></script>
+	<script>
+	$(function() {
+		$( "#menu" ).menu();
+	});
+	</script>
+	<title>suenting.github.io</title>
+  </head>
+
+  <body>
+
+	<!-- HEADER -->
+	<div id="header_wrap" class="outer">
+	<header class="inner">
+          <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
+
+          <h1 id="project_title">suenting.github.io</h1>
+          <h2 id="project_tagline"></h2>
+
+	</header>
+	</div>
+
+	<!-- MAIN CONTENT -->
+	<div id="main_content_wrap" class="outer">
+	<section id="main_content" class="inner">
+		<ul id="menu" class="floatmenu">
+			<li><a href="#lda">Linear Discriminant</a></li>
+			<li><a href="#kmeans">K-Means</a></li>
+		</ul>
+	<h1>Data Analysis Tech</h1>
+	<div class="notes">
+		<h3 class="notesHeader" id="lda">Linear Discriminant Analysis</h3>
+			Linear Discriminant Analysis, is used to solve classification problems by mapping a target input vector (T<sub>I</sub>) to a target output vector (T<sub>O</sub>).<BR/>
+			Where T<sub>I</sub> is an M dimensional input vector.  and T<sub>O</sub> is and N dimensional output vector<BR/>
+			This is done by solving the linear equation. Which divides the M dimensional space via a hyperplane to one of N segments <BR/><BR/>
+			T<sub>O</sub> = T<sub>I</sub>*W<sub>0</sub> + C
+			<BR/><BR/>
+			Where W<sub>0</sub> is a weight matrix, and C is a constant vector. <BR/>
+			Additionally W<sub>0</sub> and C are often derived from a learning data set by a collection of T<sub>I</sub> and resulting T<sub>O</sub>, (existing data) such that the T<sub>O</sub> can be predicted for future T<sub>I</sub> with this method.
+		<h3 class="notesHeader" id="kmeans">K-Means</h3>
+			K-Means, is a method to solve  classification problems by mapping entities in a data set into one of k-groups. The algorithmn is as follows:
+			<UL>
+			<LI>Given K centers (with an arbitary initial position) in the dataset</LI>
+			<LI>Map all data points to the nearest center.</LI>
+			<LI>Update the position of all centers to the averaged position of all data points which are mapped to it.</LI>
+			<LI>Repeat untill convergance. (or an arbitary cut of itteration)</LI>
+			</UL>
+			Note: The above is not gaurenteed to converge, and the resulting classification is affected by the initial positions of the K centers.
+	</div>
+
+
+	</section>
+	</div>
+
+	<!-- FOOTER  -->
+	<div id="footer_wrap" class="outer">
+	<footer class="inner">
+		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+	</footer>
+	</div>
+	<script type="text/javascript" src="./cpp.js"></script>
+	</body>
+</html>

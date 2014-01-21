@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset='utf-8' />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<meta name="description" content="Suenting.github.io : user" />
+
+	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+	<script src="../prettify/run_prettify.js"></script>
+	<link rel="stylesheet" href="../main.css">
+	<link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
+	<script src="../jquery/jquery-1.8.3.js"></script>
+	<script src="../jquery/ui/jquery.ui.core.js"></script>
+	<script src="../jquery/ui/jquery.ui.widget.js"></script>
+	<script src="../jquery/ui/jquery.ui.position.js"></script>
+	<script src="../jquery/ui/jquery.ui.menu.js"></script>
+	<script src="../jquery/ui/jquery.ui.tabs.js"></script>
+	<script>
+	$(function() {
+		$( "#menu" ).menu();
+	});
+	</script>
+	<title>suenting.github.io</title>
+  </head>
+
+  <body>
+
+	<!-- HEADER -->
+	<div id="header_wrap" class="outer">
+	<header class="inner">
+          <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
+
+          <h1 id="project_title">suenting.github.io</h1>
+          <h2 id="project_tagline"></h2>
+
+	</header>
+	</div>
+
+	<!-- MAIN CONTENT -->
+	<div id="main_content_wrap" class="outer">
+	<section id="main_content" class="inner">
+	
+	
+
+		<ul id="menu" class="floatmenu">
+			<li><a href="#device">Device Query</a></li>
+			<li><a href="#kernal">Kernal Configuration</a></li>
+			<li><a href="#memory">Memory</a></li>
+		</ul>
+<h1>CUDA NOTES</h1>		
+<div class="notes">
+<h3 class="notesHeader" id="device">Device Query</h3>
+		The below code demonstrates how to retrieve information regarding CUDA enabled cards on a machine
+<pre><code class="prettyprint">
+#include &lt;cuda.h&gt;
+cudaGetDeviceCount(&amp;deviceCount);// returns int number of cuda enabled gpus
+	
+cudaDeviceProp deviceProp;
+cudaGetDeviceProperties(&amp;deviceProp, deviceIndex);
+deviceProp.name // GPU Name
+deviceProp.major + "." + deviceProp.minor // Computational Capabilities
+deviceProp.totalGlobalMem // global memory limit
+deviceProp.totalConstMem // const memory limit
+deviceProp.sharedMemPerBlock // shared memory limit
+deviceProp.maxThreadsDim[0] x deviceProp.maxThreadsDim[1] x deviceProp.maxThreadsDim[2] // max block dimensions
+deviceProp.maxGridSize[0] x deviceProp.maxGridSize[1] x deviceProp.maxGridSize[2] // max grid dimensions
+deviceProp.warpSize // warp size
+</code></pre>
+		Additionally most cuda functions return cudaError_t which is used for error checking. 
+<pre><code class="prettyprint">
+cudaError_t err = cudaMalloc(...);
+cudaError_t err = cudaGetLastError();
+if(cudaSuccess != err)
+{
+	// handle error
+}
+</code></pre>
+<h3 class="notesHeader" id="kernal">Kernal Configuration</h3>
+		CUDA is designed to execute "kernal" functions across several cores on a GPU. CUDA threads are grouped into blocks, which are grouped into grids. This is defined as per below.
+		Note: use cudaGetDeviceProperties to detect the maximum number of threads / block size / grid size available.
+<pre><code class="prettyprint">
+dim3 dimGrid(x,y,z); // number of blocks in each dimension of the grid 
+dim3 dimBlock(x,y,z);// number of threads in each dimension of the block 
+f&lt;&lt;&lt;dimGrid,dimBlock&gt;&gt;&gt;(args); // launch kernal
+cudaThreadSynchronize(); // wait for all threads to finish
+</code></pre>
+		Kernal functions fall into three types.
+		<table style="font-size:12px;">
+		<tbody>
+		<tr><td>__device__</td><td>runs on the device, involked by another kernal</td></tr>
+		<tr><td>__global__</td><td>runs on the device, involked by another host</td></tr>
+		<tr><td>__host__</td><td>runs on the host, involked by another host</td></tr>
+		</tbody>
+		</table>
+		Threads are assigned to Streaming Multiprocessors, with up to 8 blocks per SM. Streaming Multiprocessors manage thread/block idx values which can be used to as an unique identifier (index value)
+<pre><code class="prettyprint">
+// example on a kernal
+int x = threadIdx.x+blockDim.x*blockIdx.x;
+int y = threadIdx.y+blockDim.y*blockIdx.y;
+int z = threadIdx.z+blockDim.z*blockIdx.z;
+</code></pre>
+		Each block can contain 32 thread warps, where a thread warp manages the control logic for each thread (line pointer). if the branch path for two threads
+		on the same warp is different then the warp will execute one path then the other, resulting in a performance hit.
+<h3 class="notesHeader" id="memory">Memory</h3>
+		
+
+		A GPU can only access memory stored on its chip. In order for a GPU to preform calculations and store results, memory must be allocated on the GPU, 
+		and memory must be copied to the GPU if it needs to be accessed, as well as copied back to main memory for the CPU to access the results.
+<pre><code class="prettyprint">
+cudaMalloc(&amp;ptr1,sizeBytesAllocated); // allocate gpu memory at the address of pointer ptr1
+cudaMemcpy(destinationDevice,sourceHost,inputSizeBytes,cudaMemcpyHostToDevice); // copy memory from host to device (GPU Memory)
+cudaMemcpy(destinationHost, sourceDevice, inputSizeBytes, cudaMemcpyDeviceToHost);// copy memory from deivce to host (RAM)
+cudaFree(ptr1);// free gpu (global) memory at ptr1
+</code></pre>
+		There are three types of memory.
+		<table style="font-size:12px;">
+		<tbody>
+		<tr><td>global</td><td>accessible by gpu and can by memcpy to and from cpu</td></tr>
+		<tr><td>__shared__</td><td>shared per block, declared in kernal and only accessible to given block. ( configurable size, split with L1 cache )</td></tr>
+		<tr><td>const [type] __restrict__</td><td>const memory, which cannot be modified</td></tr>
+		</tbody>
+		</table>
+		If multiple threads are sharing the work of caching data from global to shared memory, the threads must be synced to ensure that they wait untill all caching is done before proceeding.
+<pre><code class="prettyprint">
+__syncthreads();
+</code></pre>
+</div>
+
+	</section>
+	</div>
+
+	<!-- FOOTER  -->
+	<div id="footer_wrap" class="outer">
+	<footer class="inner">
+		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+	</footer>
+	</div>
+	<script type="text/javascript" src="./cpp.js"></script>
+	</body>
+</html>

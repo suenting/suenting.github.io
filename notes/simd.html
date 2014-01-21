@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset='utf-8' />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<meta name="description" content="Suenting.github.io : user" />
+
+	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+	<script src="../prettify/run_prettify.js"></script>
+	<link rel="stylesheet" href="../main.css">
+	<link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
+	<script src="../jquery/jquery-1.8.3.js"></script>
+	<script src="../jquery/ui/jquery.ui.core.js"></script>
+	<script src="../jquery/ui/jquery.ui.widget.js"></script>
+	<script src="../jquery/ui/jquery.ui.position.js"></script>
+	<script src="../jquery/ui/jquery.ui.menu.js"></script>
+	<script src="../jquery/ui/jquery.ui.tabs.js"></script>
+	<script>
+	$(function() {
+		$( "#menu" ).menu();
+	});
+	</script>
+	<title>suenting.github.io</title>
+  </head>
+
+  <body>
+
+	<!-- HEADER -->
+	<div id="header_wrap" class="outer">
+	<header class="inner">
+          <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
+
+          <h1 id="project_title">suenting.github.io</h1>
+          <h2 id="project_tagline"></h2>
+
+	</header>
+	</div>
+
+	<!-- MAIN CONTENT -->
+	<div id="main_content_wrap" class="outer">
+	<section id="main_content" class="inner">
+		<ul id="menu" class="floatmenu">
+			<li><a href="#overview">Overview</a></li>
+			<li><a href="#cache">Cache Misses</a></li>
+			<li><a href="#aliasing">Memory Aliasing</a></li>
+			<li><a href="#vc">SIMD Intrinsic</a></li>
+			<li><a href="#x86">SIMD X86</a></li>
+		</ul>
+	<h1>SIMD and cache optimization</h1>
+	<div class="notes">
+
+<h3 class="notesHeader" id="overview">Overview</h3>
+			SIMD (Single Instruction Multiple Data), is used to increase performance of an application by combining multiple instructions into a single instruction (ie. adding four pairs of numbers togther at once instead of one pair at a time).<BR/>
+			In order for SIMD to result in a performance gain it is also important to ensure that the data being processed by SIMD is stored on the CPU cache and not waiting/bottlenecking on RAM access, otherwise
+			there will be little to no gain if the instruction is blocked on an access to RAM. This can be accomplished though use of prefetch instructions / non blocking fetch calls.<BR/>
+			SIMD is either executed with use of inline assembly or compiler intrinsics.
+<h3 class="notesHeader" id="cache">Cache Misses</h3>
+			Modern processors are heavily pipelined and are optimized for throughput. In order for processors to maximize their potential its important to ensure that data in cache as often as possible before the CPU needs it.<BR>
+			There are three types of cache misses.
+			<ul>
+			<li><strong>Unavoidable miss:</strong> data is requested for the first time. (can be optimized by prefetching data in advance, if you know you'll be planning to request it shortly)</li>
+			<li><strong>Capacity miss:</strong> data requested was previously removed from cache due size limitations. (can be optimized by reducing/rearranging data required at given time slice)</li>
+			<li><strong>Conflicting cache mapping:</strong> data requested was removed because, another's data was written to same place. (mapping is handled by TLB and this can be caused by memory alignment)</li>
+			</ul>
+			
+<h3 class="notesHeader" id="aliasing">Memory Aliasing</h3>
+			Given a function with multiple pointers as arguments. If the data at any pointer is modified, the compiler assumes that the data at any memory address could have been modified, as two pointers could point to the same address, resulting in potentially excess fetch calls blocking processor throughput.
+<pre><code class="prettyprint">
+void f( float *a, float *b, float *c)
+{
+	x=*a;// fetch a
+	y=*b;
+	*c = *a+*b;
+	z=*a;// refetch a incase c is a
+}
+</code></pre>
+			This can be optimized though use of __restrict, which is a promise to the compiler that a pointer is not aliased. (however if used with pointers which are aliased the compiler will be missing necessary fetch calls resulting in potentially incorrect data / corruption)
+<pre><code class="prettyprint">
+void f( float * __restrict a, float * __restrict b, float * __restrict c) // a != b != c
+{
+	x=*a;// fetch a
+	y=*b;
+	*c = *a+*b;
+	z=*a;// no need to refetch a. (however if c == a then z will be an incorrect value)
+}
+</code></pre>
+<h3 class="notesHeader" id="vc">SIMD Intrinsic Example (VC++)</h3>
+<pre><code class="prettyprint">
+// ensure using __declspec(align(16)) on data structure
+void vectorAdd(float *dst, const float *src1, const float *src2, const int count)
+{
+	__m128* psrc1 = src1;
+	__m128* psrc2 = src2;
+	__m128* pdst = dst;
+	for(size_t i =0; i &lt; (count/4);++i)
+	{
+		// _MM_HINT_NTA ( NTA stands for non-temporal aligned )
+		// essentially this hints that this data will only be used for a short period of time. )
+		_mm_prefetch((char*)psrc1+256, _MM_HINT_NTA);
+		_mm_prefetch((char*)psrc2+256, _MM_HINT_NTA);
+		*pdst= _mm_add_ps(*psrc1,*psrc2);
+		++psrc1;
+		++psrc2;
+		++pdst;
+	}
+}
+</code></pre>
+<h3 class="notesHeader" id="x86">SIMD X86 Example (SSE)</h3>
+<pre><code class="prettyprint">
+void vectorAdd(float *dst, const float *src1, const float *src2, const int count)
+{
+	__asm
+	{
+		mov	ecx, src1
+		mov	edx, src2
+		mov	esi, dst
+		add	eax,3
+		shr	eax,2
+		jz	done
+		shl	eax, 4
+		add	esi, eax
+		add	ecx, eax
+		add	edx, eax
+		neg 	eax
+		LOOP:
+			prefetchnta[ecx+eax+512] 
+			prefetchnta[edx+eax+512]
+			movaps 	xmm0, [ecx+eax]
+			addps		xmm0, [edx+eax]
+			movaps	[esi+eax], xmm0
+			add		eax, 16
+			jl 	LOOP
+		DONE:
+	}
+}
+</code></pre>	
+	</div>
+
+
+	</section>
+	</div>
+
+	<!-- FOOTER  -->
+	<div id="footer_wrap" class="outer">
+	<footer class="inner">
+		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+	</footer>
+	</div>
+	<script type="text/javascript" src="./cpp.js"></script>
+	</body>
+</html>
