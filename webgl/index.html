@@ -6,17 +6,18 @@
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 	<meta name="description" content="Suenting.github.io : user" />
 
-	<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet_subframe.css">
-	<link rel="stylesheet" href="./jquery/themes/base/jquery.ui.all.css">
-	<script src="./jquery/jquery-1.8.3.js"></script>
-	<script src="./jquery/ui/jquery.ui.core.js"></script>
-	<script src="./jquery/ui/jquery.ui.widget.js"></script>
-	<script src="./jquery/ui/jquery.ui.position.js"></script>
-	<script src="./jquery/ui/jquery.ui.menu.js"></script>
-	<script src="./jquery/ui/jquery.ui.tabs.js"></script>
-	<script src="./jquery/ui/jquery.ui.button.js"></script>
-	<script src="./jquery/ui/jquery.ui.accordion.js"></script>
-	<script src="./prettify/run_prettify.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+	<script src="../prettify/run_prettify.js"></script>
+	<link rel="stylesheet" href="../main.css">
+	<link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
+	<script src="../jquery/jquery-1.8.3.js"></script>
+	<script src="../jquery/ui/jquery.ui.core.js"></script>
+	<script src="../jquery/ui/jquery.ui.widget.js"></script>
+	<script src="../jquery/ui/jquery.ui.position.js"></script>
+	<script src="../jquery/ui/jquery.ui.menu.js"></script>
+	<script src="../jquery/ui/jquery.ui.tabs.js"></script>
+	<script src="../jquery/ui/jquery.ui.button.js"></script>
+	<script src="../jquery/ui/jquery.ui.accordion.js"></script>
 	<link rel="stylesheet" href="./main.css">
 	<script>
 	$(function() {
@@ -30,22 +31,34 @@
 	    $( ".button" ).button();
 	  });
 	</script>
-
+	<title>suenting.github.io</title>
   </head>
 
   <body>
 
+	<!-- HEADER -->
+	<div id="header_wrap" class="outer">
+	<header class="inner">
+          <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
 
+          <h1 id="project_title">suenting.github.io</h1>
+          <h2 id="project_tagline"></h2>
+
+	</header>
+	</div>
+
+	<!-- MAIN CONTENT -->
 	<div id="main_content_wrap" class="outer">
 	<section id="main_content" class="inner">
-	<div id="tabs">
+
+<div id="tabs">
 		<ul>
 			<li><a href="#tabs-1">Basic Shading</a></li>
 			<li><a href="#tabs-2">Testing Other Shaders</a></li>
 		</ul>
 		<div id="tabs-1">
 			Loads a basic flat per-pixel (simplified) shaded model.<BR/>
-			<a class="button" href="./webgl/Basic.html" target="_blank">Launch</a>
+			<a class="button" href="./Basic.html" target="_blank">Launch</a>
 		<div id="accordion">
 		<h3>Vertex Shader</h3>
 		<div>
@@ -94,13 +107,23 @@
 		</div>
 		<div id="tabs-2">
 			Me playing with various shaders.<BR/>
-			<a class="button" href="./webgl/Mixed.html" target="_blank">Launch</a>
+			<a class="button" href="./Mixed.html" target="_blank">Launch</a>
 		</div>
 	</div>
+
+
 	</section>
 	</div>
-</body>
-	<script>
+
+	<!-- FOOTER  -->
+	<div id="footer_wrap" class="outer">
+	<footer class="inner">
+		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+	</footer>
+	</div>
+	<script type="text/javascript" src="./cpp.js"></script>
+	</body>
+		<script>
 	$( '#accordion' ).accordion({
 	autoHeight: false,
 	clearStyle: true

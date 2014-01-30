@@ -19,7 +19,7 @@
 		$( "#tabs" ).tabs();
 	});
 	$(function() {
-		$( "#menu" ).menu();
+		$( ".menu" ).menu();
 	});
 	</script>
 	<link rel="stylesheet" href="./main.css">
@@ -46,19 +46,43 @@
       
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-1">Main</a></li>
-			<li><a href="#tabs-2">Code Quiz</a></li>
-			<li><a href="#tabs-3">Image Filters</a></li>
-			<li><a href="#tabs-4">WebGL</a></li>
-			<li><a href="#tabs-5">CodeEditor</a></li>
-			<li><a href="#tabs-6">Tech Notes</a></li>
+			<li><a href="#tabs-Main">Main</a></li>
+			<li><a href="#tabs-Tools">Tools and Utilities</a></li>
+			<li><a href="#tabs-Web">Web Experiments</a></li>
+			<li><a href="#tabs-Notes">Tech Notes</a></li>
 		</ul>
-		<div id="tabs-1"><iframe src="main_sub.html"class="subframe"></iframe></div>
-		<div id="tabs-2"><iframe src="quiz_sub.html"class="subframe"></iframe></div>
-		<div id="tabs-3"><iframe src="python_image_sub.html"class="subframe"></iframe></div>
-		<div id="tabs-4"><iframe src="webgl_sub.html"class="subframe"></iframe></div>
-		<div id="tabs-5"><iframe src="ace_together_sub.html"class="subframe"></iframe></div>
-		<div id="tabs-6"><iframe src="notes_sub.html"class="subframe"></iframe></div>
+		<div id="tabs-Main" class="subframe">
+			A simple homepage for personal projects, toys, notes, and test code.
+		</div>
+		<div id="tabs-Tools" class="subframe">
+			<div id="quiz_menu" class="floatright">
+				<ul class="menu">
+					<li><a href="./python_image_util/index.html" target="_blank">Python Image Utilities</a></li>
+					<li><a href="./texttoimage/index.html" target="_blank">TextToImage</a></li>
+				</ul>
+			</div>
+			Tools and Utility Applications. Primarily written with Python/C++/Qt
+		</div>
+		<div id="tabs-Web" class="subframe">
+			<div id="quiz_menu" class="floatright">
+				<ul class="menu">
+					<li><a href="./webgl/index.html" target="_blank">WebGL</a></li>
+					<li><a href="./quiz/index.html" target="_blank">Code Quiz (Emscripten)</a></li>
+					<li><a href="./ace_together/index.html" target="_blank">Code Editor (TogetherJS)</a></li>
+				</ul>
+			</div>
+			Experiments using new web based technologies.
+		</div>		
+		<div id="tabs-Notes" class="subframe">
+			<div id="quiz_menu" class="floatright">
+				<ul class="menu">
+					<li><a href="./notes/cuda.html" target="_blank">CUDA</a></li>
+					<li><a href="./notes/data.html" target="_blank">Analysis Tech</a></li>
+					<li><a href="./notes/simd.html" target="_blank">SIMD</a></li>
+				</ul>
+			</div>
+			An assorted collection of personal notes on various tools/technologies, primarily for myself. 
+		</div>
 	</div>
 
 	</section>
