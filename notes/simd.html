@@ -31,7 +31,7 @@
 	<header class="inner">
           <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
 
-          <h1 id="project_title">suenting.github.io</h1>
+          <a href="http://suenting.github.io"><h1 id="project_title">suenting.github.io</h1></a>
           <h2 id="project_tagline"></h2>
 
 	</header>
@@ -44,6 +44,7 @@
 			<li><a href="#overview">Overview</a></li>
 			<li><a href="#cache">Cache Misses</a></li>
 			<li><a href="#aliasing">Memory Aliasing</a></li>
+			<li><a href="#coloring">Cache Coloring</a></li>
 			<li><a href="#vc">SIMD Intrinsic</a></li>
 			<li><a href="#x86">SIMD X86</a></li>
 		</ul>
@@ -61,7 +62,7 @@
 			<ul>
 			<li><strong>Unavoidable miss:</strong> data is requested for the first time. (can be optimized by prefetching data in advance, if you know you'll be planning to request it shortly)</li>
 			<li><strong>Capacity miss:</strong> data requested was previously removed from cache due size limitations. (can be optimized by reducing/rearranging data required at given time slice)</li>
-			<li><strong>Conflicting cache mapping:</strong> data requested was removed because, another's data was written to same place. (mapping is handled by TLB and this can be caused by memory alignment)</li>
+			<li><strong>Conflicting cache mapping:</strong> data requested was removed because, another's data was written to same place. (mapping is handled by  the MMU and TLB and this can be caused by memory alignment)</li>
 			</ul>
 			
 <h3 class="notesHeader" id="aliasing">Memory Aliasing</h3>
@@ -85,6 +86,10 @@ void f( float * __restrict a, float * __restrict b, float * __restrict c) // a !
 	z=*a;// no need to refetch a. (however if c == a then z will be an incorrect value)
 }
 </code></pre>
+<h3 class="notesHeader" id="coloring">Cache Coloring</h3>
+The Memory Management Unit (MMU) of a processor is responsible for mapping main memory pages to CPU cache pages. These results are often stored in a Translation Lookaside Buffer (TLB) for performance.
+All physical pages in memory are assigned a Color, which maps to a subset of virtual addresses in cache. Locations within physical pages with different colors cannot conflict in CPU cache. However if the main memory
+allocation is aligned such that allocations are spread across multiple pages, increased cache misses as a result of conflicting cache mapping will result, even though a large portion of the cache may not be utilized.
 <h3 class="notesHeader" id="vc">SIMD Intrinsic Example (VC++)</h3>
 <pre><code class="prettyprint">
 // ensure using __declspec(align(16)) on data structure
