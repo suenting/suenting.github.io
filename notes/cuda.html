@@ -47,6 +47,7 @@
 			<li><a href="#device">Device Query</a></li>
 			<li><a href="#kernal">Kernal Configuration</a></li>
 			<li><a href="#memory">Memory</a></li>
+			<li><a href="#uvm">Unified Virtual Memory</a></li>
 		</ul>
 <h1>CUDA NOTES</h1>		
 <div class="notes">
@@ -125,8 +126,22 @@ cudaFree(ptr1);// free gpu (global) memory at ptr1
 <pre><code class="prettyprint">
 __syncthreads();
 </code></pre>
-</div>
 
+<h3 class="notesHeader" id="uvm">Unified Virtual Memory</h3>
+With the introduction of the Maxwell architecture (CUDA version 6) and Unified Virtual Memory, it is no longer necessary to use 
+cudaMemcpy to manually transfer data between Main Memory and GPU Memory. Instead by declaring memory with cudaMallocManaged, the device will
+automatically copy memory from Main Memory to GPU memory and vice versa by detecting hardware pagefault access to memory from either host or device.
+
+<pre><code class="prettyprint">
+float *pData;
+cudaMallocManaged(&amp;pData, SIZE); // allocate data as managed
+// copy data to managed memory
+fGPU&lt;&lt;&lt;dimGrid,dimBlock&gt;&gt;&gt;(pData, args); // able to invoke gpu kernal with access to memory
+fCPU(pData,args); // cpu also able to access memory from said pointer.
+cudaFree(pData);
+</code></pre> 
+Note: that memory is still copied to and from the host/device when either or requires access so performance is still hit, however this is usefull to simplify application code.
+</div>
 	</section>
 	</div>
 
