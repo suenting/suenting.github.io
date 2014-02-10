@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset='utf-8' />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<meta name="description" content="Suenting.github.io : user" />
+
+	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+	<script src="../prettify/run_prettify.js"></script>
+	<link rel="stylesheet" href="../main.css">
+	<link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
+	<script src="../jquery/jquery-1.8.3.js"></script>
+	<script src="../jquery/ui/jquery.ui.core.js"></script>
+	<script src="../jquery/ui/jquery.ui.widget.js"></script>
+	<script src="../jquery/ui/jquery.ui.position.js"></script>
+	<script src="../jquery/ui/jquery.ui.menu.js"></script>
+	<script src="../jquery/ui/jquery.ui.tabs.js"></script>
+	<script>
+	$(function() {
+		$( "#menu" ).menu();
+	});
+	</script>
+	<title>suenting.github.io</title>
+  </head>
+
+  <body>
+
+	<!-- HEADER -->
+	<div id="header_wrap" class="outer">
+	<header class="inner">
+          <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
+
+          <a href="http://suenting.github.io"><h1 id="project_title">suenting.github.io</h1></a>
+          <h2 id="project_tagline"></h2>
+
+	</header>
+	</div>
+
+	<!-- MAIN CONTENT -->
+	<div id="main_content_wrap" class="outer">
+	<section id="main_content" class="inner">
+		<ul id="menu" class="floatmenu">
+			<li><a href="#nosql">NoSQL</a></li>
+			<li><a href="#mr">Map Reduce</a></li>
+			<li><a href="#dyn">Dynamo</a></li>
+			<li><a href="#mongo">MongoDB</a></li>
+		</ul>
+	<h1>NoSQL</h1>
+	<div class="notes">
+		<h3 class="notesHeader" id="nosql">NoSQL</h3>
+			NoSQL is a database which doesn't use relational tabels as the mechanism for storing data. The reason for this is to simplify the design as well as scaling across multiple machines for better performance.
+			There are various types on NoSQL databases including Key-value stores, and Key-document stores. Many NoSQL databases (Hadoop, MongoDB) are compatible with a technique known as Map Reduce which is used to 
+			process large volumes of aggregated data which may not necissarily be on a single machine.
+		<h3 class="notesHeader" id="mr">Map Reduce</h3>
+			Map Reduce is a high level programming model and implementation for large scale parallel data processing. The Map Reduce technique is broken up into two parts. The Mapper which is responsible for mapping data 
+			to an intermediate key value (this is essentially to divide the work into segments, somewhat similar to per-pixel operations of a pixel shader). The Reducer which performs an aggregated operation on all data which was mapped to its intermediate key, producing an output for said intermediate value.
+			<pre><code class="prettyprint">
+// pseudo code example
+Map( inputKey, inputValue):
+	// - calculate intermediate value based on function of inputKey and inputValue
+	EmitIntermediate( intermediateKey, relevantValue)
+	
+Reduce( outputKey, listOfMappedValues ):
+	// - perform aggregate operation on input collection
+	Emit(outputKey, result)
+</code></pre>
+		<h3 class="notesHeader" id="dyn">Dynamo</h3>
+		As a case example, Dynamo is a popular NoSQL database built by Amazon based on a key-value data model, and offers high availability at the expence of consistency. Dynamo utilizes the methodology of having data eventually consistent, 
+		that is to say data across all servers will eventually be sync'd	but this isn't required to happen right away all the time. For example, Dynamo allows the amazon store to be achive high availability when a user is browsing their store, and adding items
+		to their cart. However their data in the cart is not required to be updated across all servers immediately, untill the user is ready to checkout. Therefore as operations do not need to block the systems progress untill checkout this system can achive better
+		availability to provide a better user experience.
+		<h3 class="notesHeader" id="mongo">MongoDB</h3>
+		As a case example, MongoDB is a popular NoSQL database based on a key-document (BSON = Binary JSON) model. MongoDB is divided into three core components: mongod the database process, mongos the sharding controller, mongo the database shell (uses interactive javascript for administative tasks).
+		For applications MongoDB uses object oriented drivers to act as an API and interact with the database. 
+		<BR><BR>Additional notes: 
+		<BR>
+		MongoDB uses memory mapped files, that is to say the total data accessible must be mapped to a virtual memory address (32-bit build only able to access 2GB). <BR>
+		MongoDB is not ACID, Atomic operations are only possible within the scope of a single document.<BR>
+		MongoDB automatically utilizes all free memory on a system.<BR>
+		
+		
+	</div>
+
+
+	</section>
+	</div>
+
+	<!-- FOOTER  -->
+	<div id="footer_wrap" class="outer">
+	<footer class="inner">
+		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+	</footer>
+	</div>
+	<script type="text/javascript" src="./cpp.js"></script>
+	</body>
+</html>
