@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+	<meta charset='utf-8' />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<meta name="description" content="Suenting.github.io : user" />
+
+	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+	<script src="./lib/angular.js"></script>
+	<script src="./lib/angular-resource.js"></script>
+	<script src="./lib/d3.v3.min.js"></script>
+	<script src="./js/controller.js"></script>
+	<script src="./js/directives.js"></script>
+	<link rel="stylesheet" href="../main.css">
+	<link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
+	<link rel="stylesheet" href="./css/style.css">
+	<script src="../jquery/jquery-1.8.3.js"></script>
+	<script src="../jquery/ui/jquery.ui.core.js"></script>
+	<script src="../jquery/ui/jquery.ui.widget.js"></script>
+	<script src="../jquery/ui/jquery.ui.position.js"></script>
+	<script src="../jquery/ui/jquery.ui.menu.js"></script>
+	<title>suenting.github.io</title>
+	
+	<script>
+	$(function() {
+		$( ".menu" ).menu();
+	});
+	</script>
+	
+
+  </head>
+
+  <body>
+
+
+	<!-- HEADER -->
+	<div id="header_wrap" class="outer">
+	<header class="inner">
+          <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
+
+          <a href="http://suenting.github.io"><h1 id="project_title">suenting.github.io</h1></a>
+          <h2 id="project_tagline"></h2>
+
+	</header>
+	</div>
+
+	<!-- MAIN CONTENT -->
+	<div id="main_content_wrap" class="outer">
+	<section id="main_content" class="inner" ng-app="marvelApp" ng-controller="MarvelCtrl">
+	
+	<div id="characterView" ng-hide="toggle">
+	<H3>{{name}}</H3>
+	<img src="{{thumbnail}}" class="thumb"/>
+	{{description}}
+	<BR><BR>
+	<a href="#"><h3 ng-click="toggleView()">Back</h4></a>
+	<!-- Testing D3 -->
+	<!--<donut-chart data="[1,2,3]" ng-click="toggleView()"></donut-chart>-->
+	</div>
+	
+	
+	<div id="mainView" ng-show="toggle">
+	Filter Character Name: <input ng-model="searchText">
+	<br/><br />
+
+	<ul class="menu" style="width:900px">
+		<li ng-repeat="character in characters | filter:searchText" style="list-style:none;">
+		<a href="#" ng-click="selectCharacter(character)">{{character.name}}</a>
+		</li>
+	</ul>
+
+	 </div>
+	</section>
+	</div>
+
+	<!-- FOOTER  -->
+	<div id="footer_wrap" class="outer">
+	<footer class="inner">
+		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+	</footer>
+	</div>
+	</body>
+</html>

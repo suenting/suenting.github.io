@@ -1,0 +1,17 @@
+donut-chart
+{
+	width: 100px;
+	height: 100px;
+	display:inline-block;
+}
+
+.thumb
+{
+	width: 35%;
+	float: right;
+}
+
+#characterView
+{
+	height: 800px;
+}
