@@ -9,10 +9,10 @@ app.directive('donutChart', function() {
 
 function link(scope, element) {
 	//
-	var color = d3.scale.category10();
+	var color = d3.scale.category20();
 	var el = element[0];
-	var width = el.clientWidth;
-	var height = el.clientHeight;
+	var width = 100;
+	var height = 100;
 	var min = Math.min(width, height);
 	var pie = d3.layout.pie().sort(null);
 	var arc = d3.svg.arc()

@@ -15,3 +15,20 @@ donut-chart
 {
 	height: 800px;
 }
+
+.cardView
+{
+	border-color: #aaaaaa;
+	width: 30%;
+}
+
+.cardStats
+{
+	position: absolute;
+	left: 40%;
+	top: 20%;
+	border: 1px;
+	border-style: solid;
+	border-radius: 5px;
+	padding: 10px;
+}
