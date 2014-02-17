@@ -45,11 +45,23 @@ app.controller('mtgCtrl', ['$scope', '$http','$compile', function($scope, $http,
 				$scope.dChart.remove();
 				$scope.dChart=undefined;
 			}
+			if($scope.bChart!=undefined)
+			{
+				$scope.bChart.remove();
+				$scope.bChart=undefined;
+			}
 			var chart = angular.element(document.createElement('donut-chart'));
 			chart.attr('data',"["+card.power+","+card.toughness+"]");
 			var el = $compile( chart )( $scope );
 			angular.element(document.getElementById('dchart')).append(chart);
 			$scope.dChart = chart;
+			
+			var barChart = angular.element(document.createElement('bar-chart'));
+			barChart.attr('data',"["+card.power+","+card.toughness+"]");
+			var el = $compile( barChart )( $scope );
+			angular.element(document.getElementById('bchart')).append(barChart);
+			$scope.bChart = barChart;
+			
 			$scope.showStats = true;
 		}
 		else
@@ -62,6 +74,11 @@ app.controller('mtgCtrl', ['$scope', '$http','$compile', function($scope, $http,
 			{
 				$scope.dChart.remove();
 				$scope.dChart=undefined;
+			}
+			if($scope.bChart!=undefined)
+			{
+				$scope.bChart.remove();
+				$scope.bChart=undefined;
 			}
 			$scope.showStats = false;
 		}

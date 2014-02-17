@@ -36,4 +36,30 @@ function link(scope, element) {
   }
 });
 
-var app = angular.module('d3app',['components']);
+app.directive('barChart', function() {
+	return {
+		scope: { 'data': '=' },
+		restrict: 'E',
+		link: link
+	};
+
+function link(scope, element) {
+	//
+	var data = scope.data;
+	var color = d3.scale.category20();
+	var el = element[0];
+	var width = 500;
+	var barHeight = 20;
+	var svg = d3.select(el).append('svg').attr({width: width, height: barHeight*data.length});
+	var bar = svg.selectAll("g")
+		.data(data)
+		.enter().append("g")
+		.attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+	bar.append("rect")
+		.attr("width", function(d){return d*20;})
+		.style("fill", function(d,i) { return color(i); })
+		.attr("height", barHeight - 1);
+  }
+});
+
+//var app = angular.module('d3app',['components']);
