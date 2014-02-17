@@ -1,5 +1,3 @@
-//var components = angular.module('Components',[]);
-
 app.directive('donutChart', function() {
 	return {
 		scope: { 'data': '=' },
@@ -56,10 +54,11 @@ function link(scope, element) {
 		.enter().append("g")
 		.attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
 	bar.append("rect")
+		.attr("width", function(d){return 0;})
+		.transition()
+		.duration(1000)
 		.attr("width", function(d){return d*20;})
 		.style("fill", function(d,i) { return color(i); })
 		.attr("height", barHeight - 1);
   }
 });
-
-//var app = angular.module('d3app',['components']);
