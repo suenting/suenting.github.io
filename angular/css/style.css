@@ -23,8 +23,25 @@ bar-chart
 
 .cardView
 {
-	border-color: #aaaaaa;
-	width: 30%;
+	 border: none;
+	 width: 98%;
+}
+.cardView tr
+{
+	 border: none !important;
+}
+.cardView td
+{
+	 border: none !important;
+	 padding: 1px;
+}
+.cardframe
+{
+	border: 1px;
+	border-style: solid;
+	border-radius: 5px;
+	padding: 1px;
+	width: 35%;
 }
 
 .cardStats
