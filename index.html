@@ -14,6 +14,9 @@
 	<script src="./jquery/ui/jquery.ui.position.js"></script>
 	<script src="./jquery/ui/jquery.ui.menu.js"></script>
 	<script src="./jquery/ui/jquery.ui.tabs.js"></script>
+	<script src="./jquery/ui/jquery.ui.button.js"></script>
+	<link rel="stylesheet" href="./main.css">
+	<script src="./jquery/ui/jquery.ui.tabs.js"></script>
 	<script>
 	$(function() {
 		$( "#tabs" ).tabs();
@@ -21,8 +24,11 @@
 	$(function() {
 		$( ".menu" ).menu();
 	});
+	$(function() {
+	    $( ".button" ).button();
+	  });
 	</script>
-	<link rel="stylesheet" href="./main.css">
+	
 
 	<title>suenting.github.io</title>
   </head>
@@ -58,10 +64,45 @@
 			<div id="quiz_menu" class="floatright">
 				<ul class="menu">
 					<li><a href="./python_image_util/index.html">Python Image Utilities</a></li>
+					<li><a href="./tileEditor/index.html">TileEditor</a></li>
 					<li><a href="./texttoimage/index.html">TextToImage</a></li>
 				</ul>
 			</div>
 			Tools and Utility Applications. Primarily written with Python/C++/Qt
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<div class="item">
+				<span class="shortdesc">
+					<h3 id="imageUtil">Python Image Utilities</h3><br/>
+					An small handfull of various python scripts used for batch image processing, (implements various image filters / pallet swap)
+					<br/><a class="button" href="./python_image_util/index.html">More</a>
+				</span>
+				<span class="thumb">
+					<img src="./thumbs/tools/python_image_util.png" />
+				</span>
+			</div>
+			<div class="item">
+				<span class="shortdesc">
+					<h3 id="tileEditor">Tile Editor</h3><br/>
+					A barebones single layer, no scroll tile editor, thrown together for personal projects.
+					<br/><a class="button" href="./python_image_util/index.html">More</a>
+				</span>
+				<span class="thumb">
+					<img src="./thumbs/tools/tile_editor_thumb.png" />
+				</span>
+			</div>
+			<div class="item">
+				<span class="shortdesc">
+					<h3 id="text2Image">TextToImage</h3><br/>
+					A command line tool for converting lines of a text file into images. 
+					<br/><a class="button" href="./texttoimage/index.html">More</a>
+				</span>
+				<span class="thumb">
+					<img src="./thumbs/tools/text2Image.png" />
+				</span>
+			</div>
 		</div>
 		<div id="tabs-Web" class="subframe">
 			<div id="quiz_menu" class="floatright">
@@ -73,7 +114,62 @@
 					<li><a href="./angular/marvel.html">Marvel API (Angular)</a></li>
 				</ul>
 			</div>
-			Experiments using web based technologies.
+			Below are a collection of experiments using web-based technologies.
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<div class="item">
+				<span class="shortdesc">
+					<h3 id="webgl">WebGL</h3><br/>
+					A simple test rendering a Standford Dragon mesh using WebGL / testing some basic shaders
+					<br/><a class="button" href="./webgl/index.html">More</a>
+				</span>
+				<span class="thumb">
+					<img src="./thumbs/web/webgl_thumb.png" />
+				</span>
+			</div>
+			<div class="item">
+				<span class="shortdesc">
+					<h3 id="quiz">Code Quiz</h3><br/>
+					A quiz app written in C++, using SDL / emscripten for web. 
+					<br/><a class="button" href="./quiz/index.html">More</a>
+				</span>
+				<span class="thumb">
+					<img src="./thumbs/web/code_quiz_thumb.png" />
+				</span>
+			</div>
+			<div class="item">
+				<span class="shortdesc">
+					<h3 id="editor">ACE + TogetherJS</h3><br/>
+					A collaborative online code editor, implemented with <br/>TogetherJS (<a href="https://togetherjs.com/" target="_blank">https://togetherjs.com/</a>)<br/>ACE (<a href="http://ace.c9.io/" target="_blank">http://ace.c9.io/</a>)
+					<br/><a class="button" href="./ace_together/index.html">More</a>
+				</span>
+				<span class="thumb">
+					<img src="./thumbs/web/TogetherAce_thumb.png" />
+				</span>
+			</div>
+			<div class="item">
+				<span class="shortdesc">
+					<h3 id="editor">Magic The Gathering Viewer</h3><br/>
+					A magic the gathering card lookup, implemented with AngularJS and charts using D3 / Angular Directives<br/><br/>
+					card information taken from (<a href="http://mtgjson.com/" target="_blank">http://mtgjson.com/</a>)
+					<br/><a class="button" href="./angular/mtg.html">More</a>
+				</span>
+				<span class="thumb">
+					<img src="./thumbs/web/mtg_thumb.png" />
+				</span>
+			</div>
+			<div class="item">
+				<span class="shortdesc">
+					<h3 id="editor">Marvel API Viewer</h3><br/>
+					Testing the Marvel API (<a href="http://developer.marvel.com/" target="_blank">http://developer.marvel.com/</a>), with a simple character lookup. Implemented with AngularJS.
+					<br/><a class="button" href="./angular/mtg.html">More</a>
+				</span>
+				<span class="thumb">
+					<img src="./thumbs/web/marvel_thumb.png" />
+				</span>
+			</div>
 		</div>		
 		<div id="tabs-Notes" class="subframe">
 			<div id="quiz_menu" class="floatright">
@@ -84,7 +180,7 @@
 					<li><a href="./notes/nosql.html">NoSQL</a></li>
 				</ul>
 			</div>
-			An assorted collection of personal notes on various tools/technologies, primarily for myself. 
+			An assorted collection of personal notes on various topics/tools/technologies, primarily for myself. 
 		</div>
 	</div>
 

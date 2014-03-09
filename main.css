@@ -24,7 +24,7 @@
 .subframe
 {
 	width:1000px;
-	height:600px;
+	min-height: 600px;
 }
 
 .matrix
@@ -77,4 +77,22 @@ font-size: smaller;
   right: 25px;
   top: 30%;
   margin-top: -2.5em;
+}
+.item
+{
+	border-style:solid!important;
+	border-top:1px;
+	border-radius: 10px;
+	padding-bottom:20px;
+	border-color:#aaa;
+}
+.thumb
+{
+	width: 45%;
+	padding-left:5%;
+}
+.shortdesc
+{
+	width:48%;
+	float:left;
 }
