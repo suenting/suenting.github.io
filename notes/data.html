@@ -1,50 +1,37 @@
-<!DOCTYPE html>
-<html>
 
+<html><!DOCTYPE html>
+<html lang="en">
   <head>
-	<meta charset='utf-8' />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
-	<meta name="description" content="Suenting.github.io : user" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>suenting.github.io</title>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
-	<script src="../prettify/run_prettify.js"></script>
-	<link rel="stylesheet" href="../main.css">
-	<link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
-	<script src="../jquery/jquery-1.8.3.js"></script>
-	<script src="../jquery/ui/jquery.ui.core.js"></script>
-	<script src="../jquery/ui/jquery.ui.widget.js"></script>
-	<script src="../jquery/ui/jquery.ui.position.js"></script>
-	<script src="../jquery/ui/jquery.ui.menu.js"></script>
-	<script src="../jquery/ui/jquery.ui.tabs.js"></script>
-	<script>
-	$(function() {
-		$( "#menu" ).menu();
-	});
-	</script>
-	<title>suenting.github.io</title>
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/stylesheet.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/notes.css" rel="stylesheet">
+     <script src="../prettify/run_prettify.js"></script>
   </head>
-
   <body>
-
-	<!-- HEADER -->
-	<div id="header_wrap" class="outer">
+  
+	<!-- header -->
+	<div id="" class="navbar navbar-default navbar-fixed-top">
 	<header class="inner">
           <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
-
           <a href="http://suenting.github.io"><h1 id="project_title">suenting.github.io</h1></a>
-          <h2 id="project_tagline"></h2>
-
 	</header>
 	</div>
-
-	<!-- MAIN CONTENT -->
-	<div id="main_content_wrap" class="outer">
-	<section id="main_content" class="inner">
-		<ul id="menu" class="floatmenu">
-			<li><a href="#lda">Linear Discriminant</a></li>
-			<li><a href="#kmeans">K-Means</a></li>
-			<li><a href="#dcm">Discrete Choice Model</a></li>
-		</ul>
+	
+	<!-- content -->
+	<div class="main-content container">
+		<div class="btn-group-vertical floatmenu visible-lg">
+			<a class="btn btn-default btn-lg" href="#lda">Linear Discriminant</a>
+			<a class="btn btn-default btn-lg" href="#kmeans">K-Means</a>
+			<a class="btn btn-default btn-lg" href="#dcm">Discrete Choice Model</a>
+		</div>
+		
 	<h1>Data Analysis Tech</h1>
 	<div class="notes">
 		<h3 class="notesHeader" id="lda">Linear Discriminant Analysis</h3>
@@ -74,17 +61,14 @@
 			</UL>
 			Discrete choice models can be used to identify the most likely choice based on probablity of said choice being selected amongst sets of alternatives.
 	</div>
-
-
-	</section>
+	
 	</div>
 
-	<!-- FOOTER  -->
-	<div id="footer_wrap" class="outer">
-	<footer class="inner">
-		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-	</footer>
-	</div>
-	<script type="text/javascript" src="./cpp.js"></script>
-	</body>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+  </body>
 </html>

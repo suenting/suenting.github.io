@@ -1,0 +1,39 @@
+pre
+{
+	padding:0px;
+	box-shadow: 0 0 10px rgba(0,0,0,.25);
+	margin-top: 2px;
+	margin-bottom: 5px;
+}
+code
+{
+	width:95%;
+}
+.notes
+{
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 10px;
+	border-style:solid;
+border-color:#aaa;
+border-width:1px;
+}
+.notesHeader
+{
+padding: 10px;
+border-radius: 5px;
+background: -webkit-linear-gradient(#ddd, #bbb); /* For Safari */
+background: -o-linear-gradient(#ddd, #bbb); /* For Opera 11.1 to 12.0 */
+background: -moz-linear-gradient(#ddd, #bbb); /* For Firefox 3.6 to 15 */
+background: linear-gradient(#ddd, #bbb); /* Standard syntax */
+border-style:solid;
+border-color:#aaa;
+border-width:1px;
+}
+.floatmenu
+{
+  position: fixed;
+  right: 25px;
+  top: 30%;
+  margin-top: -2.5em;
+}

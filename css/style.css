@@ -1,0 +1,79 @@
+
+body
+{
+	background-color:#f2f2f2;
+}
+.navbar
+{
+	background-color:#000;
+	margin: 0px;
+	border: 0px;
+}
+.tab-content
+{
+	background-color:#fff;
+	min-height:600px;
+	border: 1px solid;
+	border-color: #ddd;
+	border-top:0px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.main-content
+{
+	padding-top: 100px;
+}
+.nav-tabs
+{
+	padding-left:20px;
+}
+.nav-tabs > li
+{
+	padding:0px;
+}
+.nav-tabs > li > a
+{
+	margin-right:2px!important;
+	font-weight: 700;
+	background-color: #ccc;
+	background: linear-gradient(#ddd, #bbb);
+	color: #000;
+	font-size:20px;
+}
+.active > a
+{
+	background: linear-gradient(#fff, #fff)!important;
+}
+
+.nav-tabs > li > a:hover
+{
+	border: 1px solid;
+	border-bottom: 0px;
+	border-color: #ddd;
+	color: #007edf;
+	text-shadow: -1px 1px 8px #007edf, 1px -1px 8px #007edf;
+}
+.tab-pane
+{
+	padding:15px;
+	font-size:20px;
+}
+.tab-pane>.row
+{
+	padding:15px;
+}
+
+.content-itm
+{
+	border-top: 1px solid;
+	border-color: #ddd;
+	width: 100%;
+}
+
+@media screen and (max-width: 480px) {
+	#project_title
+	{
+		padding-top:20px;
+	}
+}
