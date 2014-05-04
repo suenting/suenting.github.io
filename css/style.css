@@ -70,7 +70,14 @@ body
 	border-color: #ddd;
 	width: 100%;
 }
-
+.carousel-indicators>li
+{
+	background-color:#ddd;
+}
+.carousel-indicators>.active
+{
+	background-color:#007edf;
+}
 @media screen and (max-width: 480px) {
 	#project_title
 	{
