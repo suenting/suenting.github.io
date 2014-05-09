@@ -13,6 +13,12 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/notes.css" rel="stylesheet">
      <script src="../prettify/run_prettify.js"></script>
+     <style>
+     .anchor {
+		padding-top: 73px;
+		margin-top: -73px;
+	}
+     </style>
   </head>
   <body>
   
@@ -34,7 +40,8 @@
 		
 	<h1>Data Analysis Tech</h1>
 	<div class="notes">
-		<h3 class="notesHeader" id="lda">Linear Discriminant Analysis</h3>
+		<div class="anchor" id="lda"></div>
+		<h3 class="notesHeader">Linear Discriminant Analysis</h3>
 			Linear Discriminant Analysis, is used to solve classification problems by mapping a target input vector (T<sub>I</sub>) to a target output vector (T<sub>O</sub>).<BR/>
 			Where T<sub>I</sub> is an M dimensional input vector.  and T<sub>O</sub> is and N dimensional output vector<BR/>
 			This is done by solving the linear equation. Which divides the M dimensional space via a hyperplane to one of N segments <BR/><BR/>
@@ -42,7 +49,8 @@
 			<BR/><BR/>
 			Where W<sub>0</sub> is a weight matrix, and C is a constant vector. <BR/>
 			Additionally W<sub>0</sub> and C are often derived from a learning data set by a collection of T<sub>I</sub> and resulting T<sub>O</sub>, (existing data) such that the T<sub>O</sub> can be predicted for future T<sub>I</sub> with this method.
-		<h3 class="notesHeader" id="kmeans">K-Means</h3>
+		<div class="anchor" id="kmeans"></div>
+		<h3 class="notesHeader">K-Means</h3>
 			K-Means, is a method to solve  classification problems by mapping entities in a data set into one of k-groups. The algorithmn is as follows:
 			<UL>
 			<LI>Given K centers (with an arbitary initial position) in the dataset</LI>
@@ -51,7 +59,8 @@
 			<LI>Repeat untill convergance. (or an arbitary cut of itteration)</LI>
 			</UL>
 			Note: The above is not gaurenteed to converge, and the resulting classification is affected by the initial positions of the K centers.
-		<h3 class="notesHeader" id="dcm">Discrete Choice Model</h3>
+		<div class="anchor" id="dcm"></div>
+		<h3 class="notesHeader">Discrete Choice Model</h3>
 			A Discete Choice Model, is a model used to understand and predict a subjects behaviour when presented with two or more discrete choices. 
 			For a discrete choice model the choices presented must meet the following requirements.
 			<UL>
@@ -70,5 +79,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../js/bootstrap.min.js"></script>
+        <script>
+    $('a').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+    });
+    </script>
   </body>
 </html>

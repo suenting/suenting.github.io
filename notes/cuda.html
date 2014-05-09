@@ -13,6 +13,13 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/notes.css" rel="stylesheet">
      <script src="../prettify/run_prettify.js"></script>
+     
+     <style>
+     .anchor {
+		padding-top: 73px;
+		margin-top: -73px;
+	}
+     </style>
   </head>
   <body>
   
@@ -35,7 +42,8 @@
 		
 <h1>CUDA NOTES</h1>		
 <div class="notes">
-<h3 class="notesHeader" id="device">Device Query</h3>
+<div class="anchor" id="device"></div>
+<h3 class="notesHeader">Device Query</h3>
 		The below code demonstrates how to retrieve information regarding CUDA enabled cards on a machine
 <pre><code class="prettyprint">
 #include &lt;cuda.h&gt;
@@ -61,7 +69,8 @@ if(cudaSuccess != err)
 	// handle error
 }
 </code></pre>
-<h3 class="notesHeader" id="kernal">Kernal Configuration</h3>
+<div class="anchor" id="kernal"></div>
+<h3 class="notesHeader">Kernal Configuration</h3>
 		CUDA is designed to execute "kernal" functions across several cores on a GPU. CUDA threads are grouped into blocks, which are grouped into grids. This is defined as per below.
 		Note: use cudaGetDeviceProperties to detect the maximum number of threads / block size / grid size available.
 <pre><code class="prettyprint">
@@ -87,7 +96,8 @@ int z = threadIdx.z+blockDim.z*blockIdx.z;
 </code></pre>
 		Each block can contain 32 thread warps, where a thread warp manages the control logic for each thread (line pointer). if the branch path for two threads
 		on the same warp is different then the warp will execute one path then the other, resulting in a performance hit.
-<h3 class="notesHeader" id="memory">Memory</h3>
+<div class="anchor" id="memory"></div>
+<h3 class="notesHeader">Memory</h3>
 		
 
 		A GPU can only access memory stored on its chip. In order for a GPU to preform calculations and store results, memory must be allocated on the GPU, 
@@ -110,8 +120,8 @@ cudaFree(ptr1);// free gpu (global) memory at ptr1
 <pre><code class="prettyprint">
 __syncthreads();
 </code></pre>
-
-<h3 class="notesHeader" id="uvm">Unified Virtual Memory</h3>
+<div class="anchor" id="uvm"></div>
+<h3 class="notesHeader">Unified Virtual Memory</h3>
 With the introduction of the Maxwell architecture (CUDA version 6) and Unified Virtual Memory, it is no longer necessary to use 
 cudaMemcpy to manually transfer data between Main Memory and GPU Memory. Instead by declaring memory with cudaMallocManaged, the device will
 automatically copy memory from Main Memory to GPU memory and vice versa by detecting hardware pagefault access to memory from either host or device.
@@ -135,5 +145,13 @@ Note: that memory is still copied to and from the host/device when either or req
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../js/bootstrap.min.js"></script>
+        <script>
+    $('a').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+    });
+    </script>
   </body>
 </html>

@@ -13,6 +13,12 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/notes.css" rel="stylesheet">
      <script src="../prettify/run_prettify.js"></script>
+    <style>
+     .anchor {
+		padding-top: 73px;
+		margin-top: -73px;
+	}
+     </style>
   </head>
   <body>
   
@@ -38,13 +44,14 @@
 		
 <h1>SIMD and cache optimization</h1>
 	<div class="notes">
-
-<h3 class="notesHeader" id="overview">Overview</h3>
+<div class="anchor" id="overview"></div>
+<h3 class="notesHeader">Overview</h3>
 			SIMD (Single Instruction Multiple Data), is used to increase performance of an application by combining multiple instructions into a single instruction (ie. adding four pairs of numbers togther at once instead of one pair at a time).<BR/>
 			In order for SIMD to result in a performance gain it is also important to ensure that the data being processed by SIMD is stored on the CPU cache and not waiting/bottlenecking on RAM access, otherwise
 			there will be little to no gain if the instruction is blocked on an access to RAM. This can be accomplished though use of prefetch instructions / non blocking fetch calls.<BR/>
 			SIMD is either executed with use of inline assembly or compiler intrinsics.
-<h3 class="notesHeader" id="cache">Cache Misses</h3>
+<div class="anchor" id="cache"></div>
+<h3 class="notesHeader">Cache Misses</h3>
 			Modern processors are heavily pipelined and are optimized for throughput. In order for processors to maximize their potential its important to ensure that data in cache as often as possible before the CPU needs it.<BR>
 			There are three types of cache misses.
 			<ul>
@@ -52,8 +59,8 @@
 			<li><strong>Capacity miss:</strong> data requested was previously removed from cache due size limitations. (can be optimized by reducing/rearranging data required at given time slice)</li>
 			<li><strong>Conflicting cache mapping:</strong> data requested was removed because, another's data was written to same place. (mapping is handled by  the MMU and TLB and this can be caused by memory alignment)</li>
 			</ul>
-			
-<h3 class="notesHeader" id="aliasing">Memory Aliasing</h3>
+<div class="anchor" id="aliasing"></div>
+<h3 class="notesHeader">Memory Aliasing</h3>
 			Given a function with multiple pointers as arguments. If the data at any pointer is modified, the compiler assumes that the data at any memory address could have been modified, as two pointers could point to the same address, resulting in potentially excess fetch calls blocking processor throughput.
 <pre><code class="prettyprint">
 void f( float *a, float *b, float *c)
@@ -74,11 +81,13 @@ void f( float * __restrict a, float * __restrict b, float * __restrict c) // a !
 	z=*a;// no need to refetch a. (however if c == a then z will be an incorrect value)
 }
 </code></pre>
-<h3 class="notesHeader" id="coloring">Cache Coloring</h3>
+<div class="anchor" id="coloring"></div>
+<h3 class="notesHeader">Cache Coloring</h3>
 The Memory Management Unit (MMU) of a processor is responsible for mapping main memory pages to CPU cache pages. These results are often stored in a Translation Lookaside Buffer (TLB) for performance.
 All physical pages in memory are assigned a Color, which maps to a subset of virtual addresses in cache. Locations within physical pages with different colors cannot conflict in CPU cache. However if the main memory
 allocation is aligned such that allocations are spread across multiple pages, increased cache misses as a result of conflicting cache mapping will result, even though a large portion of the cache may not be utilized.
-<h3 class="notesHeader" id="vc">SIMD Intrinsic Example (VC++)</h3>
+<div class="anchor" id="vc"></div>
+<h3 class="notesHeader">SIMD Intrinsic Example (VC++)</h3>
 <pre><code class="prettyprint">
 // ensure using __declspec(align(16)) on data structure
 void vectorAdd(float *dst, const float *src1, const float *src2, const int count)
@@ -99,7 +108,8 @@ void vectorAdd(float *dst, const float *src1, const float *src2, const int count
 	}
 }
 </code></pre>
-<h3 class="notesHeader" id="x86">SIMD X86 Example (SSE)</h3>
+<div class="anchor" id="x86"></div>
+<h3 class="notesHeader">SIMD X86 Example (SSE)</h3>
 <pre><code class="prettyprint">
 void vectorAdd(float *dst, const float *src1, const float *src2, const int count)
 {
@@ -139,5 +149,13 @@ void vectorAdd(float *dst, const float *src1, const float *src2, const int count
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../js/bootstrap.min.js"></script>
+    <script>
+    $('a').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+    });
+    </script>
   </body>
 </html>

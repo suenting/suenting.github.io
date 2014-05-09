@@ -13,6 +13,12 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/notes.css" rel="stylesheet">
      <script src="../prettify/run_prettify.js"></script>
+     <style>
+     .anchor {
+		padding-top: 73px;
+		margin-top: -73px;
+	}
+     </style>
   </head>
   <body>
   
@@ -35,11 +41,13 @@
 		
 	<h1>NoSQL</h1>
 	<div class="notes">
-		<h3 class="notesHeader" id="nosql">NoSQL</h3>
+		<div class="anchor" id="nosql"></div>
+		<h3 class="notesHeader">NoSQL</h3>
 			NoSQL is a database which doesn't use relational tabels as the mechanism for storing data. The reason for this is to simplify the design as well as scaling across multiple machines for better performance.
 			There are various types on NoSQL databases including Key-value stores, and Key-document stores. Many NoSQL databases (Hadoop, MongoDB) are compatible with a technique known as Map Reduce which is used to 
 			process large volumes of aggregated data which may not necissarily be on a single machine.
-		<h3 class="notesHeader" id="mr">Map Reduce</h3>
+		<div class="anchor" id="mr"></div>
+		<h3 class="notesHeader">Map Reduce</h3>
 			Map Reduce is a high level programming model and implementation for large scale parallel data processing. The Map Reduce technique is broken up into two parts. The Mapper which is responsible for mapping data 
 			to an intermediate key value (this is essentially to divide the work into segments, somewhat similar to per-pixel operations of a pixel shader). The Reducer which performs an aggregated operation on all data which was mapped to its intermediate key, producing an output for said intermediate value.
 			<pre><code class="prettyprint">
@@ -52,12 +60,14 @@ Reduce( outputKey, listOfMappedValues ):
 	// - perform aggregate operation on input collection
 	Emit(outputKey, result)
 </code></pre>
-		<h3 class="notesHeader" id="dyn">Dynamo</h3>
+		<div class="anchor" id="dyn"></div>
+		<h3 class="notesHeader">Dynamo</h3>
 		As a case example, Dynamo is a popular NoSQL database built by Amazon based on a key-value data model, and offers high availability at the expence of consistency. Dynamo utilizes the methodology of having data eventually consistent, 
 		that is to say data across all servers will eventually be sync'd	but this isn't required to happen right away all the time. For example, Dynamo allows the amazon store to be achive high availability when a user is browsing their store, and adding items
 		to their cart. However their data in the cart is not required to be updated across all servers immediately, untill the user is ready to checkout. Therefore as operations do not need to block the systems progress untill checkout this system can achive better
 		availability to provide a better user experience.
-		<h3 class="notesHeader" id="mongo">MongoDB</h3>
+		<div class="anchor" id="mongo"></div>
+		<h3 class="notesHeader">MongoDB</h3>
 		As a case example, MongoDB is a popular NoSQL database based on a key-document (BSON = Binary JSON) model. MongoDB is divided into three core components: mongod the database process, mongos the sharding controller, mongo the database shell (uses interactive javascript for administative tasks).
 		For applications MongoDB uses object oriented drivers to act as an API and interact with the database. 
 		<BR><BR>Additional notes: 
@@ -77,5 +87,13 @@ Reduce( outputKey, listOfMappedValues ):
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../js/bootstrap.min.js"></script>
+        <script>
+    $('a').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+    });
+    </script>
   </body>
 </html>
