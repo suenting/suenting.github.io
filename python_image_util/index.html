@@ -1,99 +1,160 @@
-<!DOCTYPE html>
-<html>
 
+<html><!DOCTYPE html>
+<html lang="en">
   <head>
-	<meta charset='utf-8' />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
-	<meta name="description" content="Suenting.github.io : user" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>suenting.github.io</title>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
-	<script src="../prettify/run_prettify.js"></script>
-	<link rel="stylesheet" href="../main.css">
-	<link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
-	<script src="../jquery/jquery-1.8.3.js"></script>
-	<script src="../jquery/ui/jquery.ui.core.js"></script>
-	<script src="../jquery/ui/jquery.ui.widget.js"></script>
-	<script src="../jquery/ui/jquery.ui.position.js"></script>
-	<script src="../jquery/ui/jquery.ui.menu.js"></script>
-	<script src="../jquery/ui/jquery.ui.tabs.js"></script>
-	<script src="../jquery/ui/jquery.ui.accordion.js"></script>
-	<script>
-	$(function() {
-		$( "#menu" ).menu();
-	});
-	$(function() {
-		$( "#tabs" ).tabs();
-	});
-	</script>
-	<title>suenting.github.io</title>
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/stylesheet.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/notes.css" rel="stylesheet">
+     <script src="../prettify/run_prettify.js"></script>
   </head>
-
   <body>
-
-	<!-- HEADER -->
-	<div id="header_wrap" class="outer">
+  
+	<!-- header -->
+	<div id="" class="navbar navbar-default navbar-fixed-top">
 	<header class="inner">
           <a id="forkme_banner" href="https://github.com/suenting">View on GitHub</a>
-
           <a href="http://suenting.github.io"><h1 id="project_title">suenting.github.io</h1></a>
-          <h2 id="project_tagline"></h2>
-
 	</header>
 	</div>
-
-	<!-- MAIN CONTENT -->
-	<div id="main_content_wrap" class="outer">
+	
+	<!-- content -->
+	<div class="main-content container">
 	<section id="main_content" class="inner">
 	An assortment of image manipulation tools. 
 	<BR/><BR/>
 	source code: <a target="_blank" href="https://github.com/suenting/AssortedPythonImageTools/">here</a>
 	<BR/>
-		<div id="accordion">
-		<h3>Image Raise</h3>
-		<div>
-		<div class="floatleft matrix">
-		<BR /><BR />[ 0, 0,-2 ]<BR/>[ 0, 2, 0 ]<BR/>[ 1, 0, 0 ]
-		</div>
-		<table class="floatright">
+	
+	
+	<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        
+          Image Raise
+        
+      </h4>
+    </div>
+    </a>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <div class="row">
+	<div class="col-md-3 matrix">
+	<BR /><BR />[ 0, 0,-2 ]<BR/>[ 0, 2, 0 ]<BR/>[ 1, 0, 0 ]
+	</div>
+	<div class="col-md-9">
+		<table>
 			<tbody>
 			<tr><th>Original</th><th>Raised</th></tr>
-			<tr><td><img src="../images/filters_originals/cloudsinthedesert.png" /></td><td><img src="../images/filters_raised/cloudsinthedesert.png" /></td></tr>
+			<tr><td><img src="../images/filters_originals/cloudsinthedesert.png" class="img-responsive" /></td><td><img src="../images/filters_raised/cloudsinthedesert.png" class="img-responsive" /></td></tr>
 			</tbody>
 		</table>
-		</div>
-		<h3>Sharpen</h3>
-		<div>
-		<div class="floatleft matrix">
-		<BR /><BR />[-1,-1,-1 ]<BR/>[-1, 9,-1 ]<BR/>[-1,-1,-1 ]
-		</div>
-		<table class="floatright">
+	</div>
+	</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        
+          Sharpen
+        
+      </h4>
+    </div>
+    </a>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+	<div class="row">
+	<div class="col-md-3 matrix">
+	<BR /><BR />[-1,-1,-1 ]<BR/>[-1, 9,-1 ]<BR/>[-1,-1,-1 ]
+	</div>
+	<div class="col-md-9">
+		<table>
 			<tbody>
 			<tr><th>Original</th><th>Sharpen</th></tr>
-			<tr><td><img src="../images/filters_originals/fortress.png" /></td><td><img src="../images/filters_sharpen/fortress.png" /></td></tr>
+			<tr><td><img src="../images/filters_originals/fortress.png" class="img-responsive" /></td><td><img src="../images/filters_sharpen/fortress.png" class="img-responsive"/></td></tr>
 			</tbody>
 		</table>
-		</div>
-		<h3>Bloom</h3>
-		<div>
-		<table class="floatright">
+	</div>
+	</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+  <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+          Bloom
+      </h4>
+    </div>
+    </a>
+    <div id="collapseThree" class="panel-collapse collapse">
+      <div class="panel-body">
+	<div class="row">
+	<div class="col-md-3 matrix">
+	</div>
+	<div class="col-md-9">
+		<table>
 			<tbody>
 			<tr><th>Original</th><th>Bloom</th></tr>
-			<tr><td><img src="../images/filters_originals/gate.png" /></td><td><img src="../images/filters_bloom/gate.png" /></td></tr>
+			<tr><td><img src="../images/filters_originals/gate.png" class="img-responsive" /></td><td><img src="../images/filters_bloom/gate.png" class="img-responsive" /></td></tr>
 			</tbody>
 		</table>
-		</div>
-		<h3>Sketch</h3>
-		<div>
-		<table class="floatright">
+	</div>
+	</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+          Sketch
+      </h4>
+    </div>
+    </a>
+    <div id="collapseFour" class="panel-collapse collapse">
+      <div class="panel-body">
+	<div class="row">
+	<div class="col-md-3 matrix">
+	</div>
+	<div class="col-md-9">
+		<table>
 			<tbody>
 			<tr><th>Original</th><th>Sketch</th></tr>
-			<tr><td><img src="../images/filters_originals/shore.png" /></td><td><img src="../images/filters_sketch/shore.png" /></td></tr>
+			<tr><td><img src="../images/filters_originals/shore.png" class="img-responsive" /></td><td><img src="../images/filters_sketch/shore.png" class="img-responsive" /></td></tr>
 			</tbody>
 		</table>
-		</div>
-		<h3>Pallet Swap</h3>
-		<div>
-		<table class="floatright">
+	</div>
+	</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+         Pallet Swap
+      </h4>
+    </div>
+    </a>
+    <div id="collapseFive" class="panel-collapse collapse">
+      <div class="panel-body">
+	<div class="row">
+	<div class="col-md-3 matrix">
+	</div>
+	<div class="col-md-9">
+        		<table>
 			<tbody>
 			<tr>
 				<th>Original</th>
@@ -107,24 +168,24 @@
 			</tr>
 			</tbody>
 		</table>
-		</div>
-		</div>
-
-	</section>
+	</div>
 	</div>
 
-	<!-- FOOTER  -->
-	<div id="footer_wrap" class="outer">
-	<footer class="inner">
-		<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-	</footer>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
 	</div>
-	<script type="text/javascript" src="./cpp.js"></script>
-	</body>
-	<script>
-	$( '#accordion' ).accordion({
-	autoHeight: false,
-	clearStyle: true
-	}); 
-	</script>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+  </body>
 </html>
