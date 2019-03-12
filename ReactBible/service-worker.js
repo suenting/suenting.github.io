@@ -1,8 +1,8 @@
 "use strict";
 var precacheConfig = [
-        ["./index.html", "06a4149e1991374329a0f5d37d3b7a72"],
-        ["./static/js/main.f99ea483.js", "1b53f76dcda7761b00b09868c2940028"],
-        ["./static/css/main.e6855c58.css", "1b53f76dcda7761b00b09868c2940027"]
+        ["./index.html", "388c931fc2dc5cd0f7d1dd0cf86c130b"],
+        ["./static/js/main.27d8e4ea.js", "9f1db60b2dc7bd0e71bf7254775112ab"],
+        ["./static/css/main.3c2ff5e0.css", "9f1db60b2dc7bd0e71bf7254775112aa"]
     ],
     cacheName = "sw-precache-v3-sw-precache-webpack-plugin-" + (self.registration ? self.registration.scope : ""),
     ignoreUrlParametersMatching = [/^utm_/],
@@ -10,14 +10,14 @@ var precacheConfig = [
         var n = new URL(e);
         return "/" === n.pathname.slice(-1) && (n.pathname += t), n.toString()
     },
-    cleanResponse = function(e) {
-        return e.redirected ? ("body" in e ? Promise.resolve(e.body) : e.blob()).then(function(t) {
-            return new Response(t, {
-                headers: e.headers,
-                status: e.status,
-                statusText: e.statusText
+    cleanResponse = function(t) {
+        return t.redirected ? ("body" in t ? Promise.resolve(t.body) : t.blob()).then(function(e) {
+            return new Response(e, {
+                headers: t.headers,
+                status: t.status,
+                statusText: t.statusText
             })
-        }) : Promise.resolve(e)
+        }) : Promise.resolve(t)
     },
     createCacheKey = function(e, t, n, r) {
         var a = new URL(e);
@@ -30,17 +30,17 @@ var precacheConfig = [
             return n.match(e)
         })
     },
-    stripIgnoredUrlParameters = function(e, t) {
-        var n = new URL(e);
-        return n.hash = "", n.search = n.search.slice(1).split("&").map(function(e) {
+    stripIgnoredUrlParameters = function(e, n) {
+        var t = new URL(e);
+        return t.hash = "", t.search = t.search.slice(1).split("&").map(function(e) {
             return e.split("=")
-        }).filter(function(e) {
-            return t.every(function(t) {
-                return !t.test(e[0])
+        }).filter(function(t) {
+            return n.every(function(e) {
+                return !e.test(t[0])
             })
         }).map(function(e) {
             return e.join("=")
-        }).join("&"), n.toString()
+        }).join("&"), t.toString()
     },
     hashParamName = "_sw-precache",
     urlsToCacheKeys = new Map(precacheConfig.map(function(e) {
@@ -61,17 +61,17 @@ function setOfCachedUrls(e) {
     })
 }
 self.addEventListener("install", function(e) {
-    e.waitUntil(caches.open(cacheName).then(function(e) {
-        return setOfCachedUrls(e).then(function(t) {
-            return Promise.all(Array.from(urlsToCacheKeys.values()).map(function(n) {
-                if (!t.has(n)) {
-                    var r = new Request(n, {
+    e.waitUntil(caches.open(cacheName).then(function(r) {
+        return setOfCachedUrls(r).then(function(n) {
+            return Promise.all(Array.from(urlsToCacheKeys.values()).map(function(t) {
+                if (!n.has(t)) {
+                    var e = new Request(t, {
                         credentials: "same-origin"
                     });
-                    return fetch(r).then(function(t) {
-                        if (!t.ok) throw new Error("Request for " + n + " returned a response with status " + t.status);
-                        return cleanResponse(t).then(function(t) {
-                            return e.put(n, t)
+                    return fetch(e).then(function(e) {
+                        if (!e.ok) throw new Error("Request for " + t + " returned a response with status " + e.status);
+                        return cleanResponse(e).then(function(e) {
+                            return r.put(t, e)
                         })
                     })
                 }
@@ -81,29 +81,29 @@ self.addEventListener("install", function(e) {
         return self.skipWaiting()
     }))
 }), self.addEventListener("activate", function(e) {
-    var t = new Set(urlsToCacheKeys.values());
-    e.waitUntil(caches.open(cacheName).then(function(e) {
-        return e.keys().then(function(n) {
-            return Promise.all(n.map(function(n) {
-                if (!t.has(n.url)) return e.delete(n)
+    var n = new Set(urlsToCacheKeys.values());
+    e.waitUntil(caches.open(cacheName).then(function(t) {
+        return t.keys().then(function(e) {
+            return Promise.all(e.map(function(e) {
+                if (!n.has(e.url)) return t.delete(e)
             }))
         })
     }).then(function() {
         return self.clients.claim()
     }))
-}), self.addEventListener("fetch", function(e) {
-    if ("GET" === e.request.method) {
-        var t, n = stripIgnoredUrlParameters(e.request.url, ignoreUrlParametersMatching),
+}), self.addEventListener("fetch", function(t) {
+    if ("GET" === t.request.method) {
+        var e, n = stripIgnoredUrlParameters(t.request.url, ignoreUrlParametersMatching),
             r = "index.html";
-        (t = urlsToCacheKeys.has(n)) || (n = addDirectoryIndex(n, r), t = urlsToCacheKeys.has(n));
+        (e = urlsToCacheKeys.has(n)) || (n = addDirectoryIndex(n, r), e = urlsToCacheKeys.has(n));
         var a = "/index.html";
-        !t && "navigate" === e.request.mode && isPathWhitelisted(["^(?!\\/__).*"], e.request.url) && (n = new URL(a, self.location).toString(), t = urlsToCacheKeys.has(n)), t && e.respondWith(caches.open(cacheName).then(function(e) {
+        !e && "navigate" === t.request.mode && isPathWhitelisted(["^(?!\\/__).*"], t.request.url) && (n = new URL(a, self.location).toString(), e = urlsToCacheKeys.has(n)), e && t.respondWith(caches.open(cacheName).then(function(e) {
             return e.match(urlsToCacheKeys.get(n)).then(function(e) {
                 if (e) return e;
                 throw Error("The cached response that was expected is missing.")
             })
-        }).catch(function(t) {
-            return console.warn('Couldn\'t serve response for "%s" from cache: %O', e.request.url, t), fetch(e.request)
+        }).catch(function(e) {
+            return console.warn('Couldn\'t serve response for "%s" from cache: %O', t.request.url, e), fetch(t.request)
         }))
     }
 });
