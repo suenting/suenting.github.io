@@ -91,7 +91,8 @@ self.addEventListener("install", function(e) {
     }).then(function() {
         return self.clients.claim()
     }))
-}), self.addEventListener("fetch", function(t) {
+}), 
+self.addEventListener("fetch", function(t) {
     if ("GET" === t.request.method) {
         var e, n = stripIgnoredUrlParameters(t.request.url, ignoreUrlParametersMatching),
             r = "index.html";
@@ -106,4 +107,23 @@ self.addEventListener("install", function(e) {
             return console.warn('Couldn\'t serve response for "%s" from cache: %O', t.request.url, e), fetch(t.request)
         }))
     }
+}),
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+      caches.open('mysite-dynamic').then(function(cache) {
+        return cache.match(event.request).then(function (response) {
+          return response || fetch(event.request).then(function(response) {
+            cache.put(event.request, response.clone());
+            return response;
+          });
+        });
+      })
+    );
+}),
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+      fetch(event.request).catch(function() {
+        return caches.match(event.request);
+      })
+    );
 });
