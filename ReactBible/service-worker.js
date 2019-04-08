@@ -1,8 +1,8 @@
 "use strict";
 var precacheConfig = [
-        ["./index.html", "8a41449f69d40b244c64fa6709e13f9a"],
+        ["./index.html", "61f39d13b97d2ee970fc78973e04a615"],
         ["./static/css/main.11f140ff.css", "7f5f1a1d8a31cf0e13c0937dd458f933"],
-        ["./static/js/main.7501e7bd.js", "2ecc439b4d8dd6b6e0b61ff16982a512"]
+        ["./static/js/main.3342c90a.js", "06475a84f7f8c3521baad0d1d2acbe6b"]
     ],
     cacheName = "sw-precache-v3-sw-precache-webpack-plugin-" + (self.registration ? self.registration.scope : ""),
     ignoreUrlParametersMatching = [/^utm_/],
@@ -91,8 +91,7 @@ self.addEventListener("install", function(e) {
     }).then(function() {
         return self.clients.claim()
     }))
-}), 
-self.addEventListener("fetch", function(t) {
+}), self.addEventListener("fetch", function(t) {
     if ("GET" === t.request.method) {
         var e, n = stripIgnoredUrlParameters(t.request.url, ignoreUrlParametersMatching),
             r = "index.html";
@@ -110,20 +109,13 @@ self.addEventListener("fetch", function(t) {
 }),
 self.addEventListener('fetch', function(event) {
     event.respondWith(
-      caches.open('mysite-dynamic').then(function(cache) {
+      caches.open('reactbible-dynamic').then(function(cache) {
         return cache.match(event.request).then(function (response) {
           return response || fetch(event.request).then(function(response) {
             cache.put(event.request, response.clone());
             return response;
           });
         });
-      })
-    );
-}),
-self.addEventListener('fetch', function(event) {
-    event.respondWith(
-      fetch(event.request).catch(function() {
-        return caches.match(event.request);
       })
     );
 });
