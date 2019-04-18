@@ -1,8 +1,8 @@
 "use strict";
 var precacheConfig = [
-        ["./index.html", "9d458af74d806df9709ebfc4822228b0"],
+        ["./index.html", "1b8e97c0a53b8dfe8895333cd0e093d2"],
         ["./static/css/main.11f140ff.css", "7f5f1a1d8a31cf0e13c0937dd458f933"],
-        ["./static/js/main.26b97d0b.js", "24bae4ad6cb62fcee6c2e1975e7654cf"]
+        ["./static/js/main.c328d939.js", "75228c796e144ef32130eef312dcf73e"]
     ],
     cacheName = "sw-precache-v3-sw-precache-webpack-plugin-" + (self.registration ? self.registration.scope : ""),
     ignoreUrlParametersMatching = [/^utm_/],
@@ -109,13 +109,13 @@ self.addEventListener("install", function(e) {
 }),
 self.addEventListener('fetch', function(event) {
     event.respondWith(
-      caches.open('reactbible-dynamic').then(function(cache) {
+        caches.open('reactbible-dynamic').then(function(cache) {
         return cache.match(event.request).then(function (response) {
-          return response || fetch(event.request).then(function(response) {
+            return response || fetch(event.request).then(function(response) {
             cache.put(event.request, response.clone());
             return response;
-          });
+            });
         });
-      })
-    );    
+        })
+    );     
 });
