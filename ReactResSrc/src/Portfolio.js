@@ -127,7 +127,7 @@ class Portfolio extends React.Component {
                     <ProjItem
                     id="ReactBible"
                     title="React Bible"    
-                    desc="A simple reader SPA/PWA written in React/Redux with text to voice provided by responsivevoice.org"
+                    desc="A multi language bible app written in React/Redux"
                     github="https://github.com/suenting/ReactBible"
                     url="https://suenting.github.io/ReactBible/index.html"
                     ></ProjItem>
@@ -135,7 +135,7 @@ class Portfolio extends React.Component {
                     <ProjItem
                     id="Darks_Voice"
                     title="Darks Voice"    
-                    desc="A simple flutter app, plays back audio from darksouls carvings"
+                    desc="A flutter app, plays back audio from darksouls carvings"
                     github="https://github.com/suenting/darks_voice"
                     apk="https://github.com/suenting/darks_voice/releases/download/v1/darks_voice.apk"
                     ></ProjItem>
@@ -164,8 +164,9 @@ class Portfolio extends React.Component {
                     title="Programmer (Jul 2016 -  Aug 2018)"
                     tasks="
                     	Developing various internal tools and pipelines to facilitate the delivery of client projects using Node JS, Python, and Angular JS|
-                        Developed new Interactive question types to expand the company’s portfolio of questions offered to clients|
-                        Supporting existing client, research projects for clients such as (Samsung, Coca Cola, Subway) primarily with C#, JavaScript, LUA"
+                        Developed new Interactive question types and layouts to expand the company’s portfolio of questions offered to clients|
+                        Implementing integrations with thir party APIs|
+                        Supporting existing client, research projects"
                     examples="
                     	Developed a tool to automate the construction of “idea filtering” surveys for Subway which takes as input several ideas (as images) for potential new sandwiches, and generates a research study for immediate deployment, using Python.|
                         Developed an internal knowledge sharing web application using Node JS / Angular JS|
