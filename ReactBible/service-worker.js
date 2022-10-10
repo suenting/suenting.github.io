@@ -1,6 +1,6 @@
 "use strict";
 var precacheConfig = [
-        ["./index.html", "352d2d748a49ba435676d8db20d7e85f"],
+        ["./index.html", "225ab80e"],
         ["./static/css/main.fe5f3ebf.css", "fe5f3ebf"],
         ["./static/js/main.225ab80e.js", "225ab80e"]
     ],
