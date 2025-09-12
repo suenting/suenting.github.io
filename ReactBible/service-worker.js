@@ -1,8 +1,8 @@
 "use strict";
 var precacheConfig = [
-        ["./index.html", "d67ef8e5"],
+        ["./index.html", "225ab80e"],
         ["./static/css/main.89585cf7.css", "89585cf7"],
-        ["./static/js/main.d67ef8e5.js", "d67ef8e5"]
+        ["./static/js/main.07c7616e.js", "07c7616e"]
     ],
     cacheName = "sw-precache-v3-sw-precache-webpack-plugin-" + (self.registration ? self.registration.scope : ""),
     ignoreUrlParametersMatching = [/^utm_/],
