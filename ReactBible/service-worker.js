@@ -1,7 +1,7 @@
 "use strict";
 var precacheConfig = [
         ["./index.html", "46069b24"],
-        ["./static/css/main.15c457.css", "15c457"],
+        ["./static/css/main.15c457d6.css", "15c457d6"],
         ["./static/js/main.46069b24.js", "46069b24"]
     ],
     cacheName = "sw-precache-v3-sw-precache-webpack-plugin-" + (self.registration ? self.registration.scope : ""),
